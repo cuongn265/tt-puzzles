@@ -8,6 +8,8 @@ import { AngularFireModule } from "angularfire2";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { LevelSelectionPage } from "../pages/level-selection/level-selection";
+import { LevelSelectionModule } from "../pages/level-selection/level-selection.module";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyC5V9OYfSXu0GclHFSA9BlM9Oj3jyBY0kA",
@@ -26,12 +28,14 @@ export const firebaseConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    LevelSelectionModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    LevelSelectionPage
   ],
   providers: [
     StatusBar,

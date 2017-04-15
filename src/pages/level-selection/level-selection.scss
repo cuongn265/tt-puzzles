@@ -1,0 +1,29 @@
+page-level-selection {
+  ion-content {
+    scroll-content {
+      display: flex;
+      flex-direction: column;
+    }
+    ion-grid {
+      padding: 0;
+      height: 100%;
+      .header {
+        flex: 1;
+      }
+      .lvl-selection-group {
+        flex: 3;
+        .btn-lvl-selection {
+          width: 80%;
+        }
+      }
+      .btn-home {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+    }
+  }
+  ion-row {
+    text-align: center;
+  }
+}
