@@ -1,14 +1,38 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content style="background-image: url('http://materialdesignblog.com/wp-content/uploads/2016/06/image3.jpg')">
+  <ion-grid>
+    <ion-row class="header">
+      <ion-col col-12 align-self-end>
+        <img src="assets/img/logo1.png" alt="logo1">
+      </ion-col>
+      <ion-col col-12 align-self-start>
+        <img src="assets/img/logo2.png" alt="logo2">
+      </ion-col>
+    </ion-row>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+    <ion-row class="body">
+      <ion-col>
+        <div>
+          <h4>Welcome back, cuongngo</h4>
+          <button ion-button outline color="light">Let's Twist</button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="footer" justify-content-start>
+      <ion-col col-9 align-self-end text-left class="left-options">
+        <button ion-button icon-only round="true" mode="md" color="transparent">
+          <ion-icon name="list"></ion-icon>
+        </button>
+        <button ion-button icon-only round="true" mode="md" color="transparent">
+          <ion-icon name="body"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-3 align-self-end text-right class="right-options">
+        <button ion-button icon-only round="true" mode="md" color="transparent">
+          <ion-icon name="help"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
