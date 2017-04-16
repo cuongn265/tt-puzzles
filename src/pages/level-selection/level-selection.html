@@ -19,24 +19,24 @@
     <div class="lvl-selection-group">
       <ion-row>
         <ion-col col-12>
-          <button ion-button outline large class="btn-lvl-selection">Whirlwind</button>
+          <button ion-button outline large class="btn-lvl-selection lvl-easy" (click)="playMode('easy')">Whirlwind</button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col col-12>
-          <button ion-button outline large class="btn-lvl-selection">Cyclone</button>
+          <button ion-button outline large class="btn-lvl-selection lvl-normal" (click)="playMode('normal')">Cyclone</button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col col-12>
-          <button ion-button outline large class="btn-lvl-selection">Tornado</button>
+          <button ion-button outline large class="btn-lvl-selection lvl-hard" (click)="playMode('hard')">Tornado</button>
         </ion-col>
       </ion-row>
     </div>
 
     <ion-row>
       <ion-col col-12 text-left>
-        <button ion-button icon-only class="btn-home" outline>
+        <button ion-button icon-only outline class="btn-home" (click)="goHome()">
           <ion-icon name="home"></ion-icon>
         </button>
       </ion-col>
