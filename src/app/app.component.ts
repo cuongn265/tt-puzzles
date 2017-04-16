@@ -9,7 +9,7 @@ import { LevelSelectionPage } from "../pages/level-selection/level-selection";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LevelSelectionPage;
+  rootPage:any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
