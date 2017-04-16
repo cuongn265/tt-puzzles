@@ -9,7 +9,8 @@ page-stage {
     .content {
       flex: 5;
       ion-card {
-        // background: transparent;
+        background: transparent;
+        border: 1px solid white;
         ion-card-content {
           height: 100%;
           .header {
@@ -35,8 +36,6 @@ page-stage {
                 }
               }
               .result {
-                border: 1px solid color($colors, dark);
-                padding: 5px;
               }
             }
           }

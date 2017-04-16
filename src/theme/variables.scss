@@ -29,12 +29,20 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  transparent: transparent
+  transparent: transparent,
 );
 
 // $background-color: teal;
 
 $text-color: white;
+
+.md {
+  .card {
+    h1, h2, h3, h4, h5, p {
+      color: white;
+    }
+  }
+}
 
 
 // App iOS Variables

@@ -7,28 +7,48 @@ page-overall {
     padding: 0;
     height: 100%;
     .content {
+      padding: 20px;
       flex: 3;
-      ion-card ion-card-content {
-        height: 100%;
-        ion-grid {
-          ion-row {
-            ion-col {
-              height: 100%;
-              justify-content: center;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              h2 {
-                flex: 1;
-              }
+      ion-grid {
+        border: 1px solid;
+        ion-row {
+          ion-col {
+            height: 100%;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            h2 {
+              flex: 1;
             }
           }
-          ion-row:nth-child(odd) {
-            flex: 3;
+          .header {
+            p:first-child {
+              font-size: 2rem;
+              margin: 0px;
+            }
+
+            p:last-child {
+              font-size: 1.4rem;
+            }
           }
-          ion-row:nth-child(even) {
-            flex: 4;
+          .body {
+            p {
+              font-size: 1.6rem;
+            }
           }
+
+          .footer {
+            p {
+              font-size: 2rem;
+            }
+          }
+        }
+        ion-row:nth-child(odd) {
+          flex: 3;
+        }
+        ion-row:nth-child(even) {
+          flex: 4;
         }
       }
     }
