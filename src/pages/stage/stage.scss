@@ -1,0 +1,68 @@
+page-stage {
+  scroll-content {
+    display: flex;
+    flex-direction: column;
+  }
+  ion-grid {
+    padding: 0;
+    height: 100%;
+    .content {
+      flex: 5;
+      ion-card {
+        // background: transparent;
+        ion-card-content {
+          height: 100%;
+          .header {
+            flex: 1;
+            color: color($colors, light);
+          }
+          .body {
+            flex: 5;
+            color: color($colors, light);
+            // button {
+            //   width: 50px;
+            //   height: 50px;
+            //   border-radius: 50%;
+            //   border: 1px solid;
+            // }
+            ion-grid {
+              ion-row {
+                flex: 1;
+              }
+              .challenge {
+                p {
+                  font-size: 1.8rem;
+                }
+              }
+              .result {
+                border: 1px solid color($colors, dark);
+                padding: 5px;
+              }
+            }
+          }
+          .attempt {
+            flex: 1;
+            color: color($colors, light);
+            ion-row {
+              ion-col {
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                align-items: flex-end;
+              }
+            }
+          }
+        }
+      }
+    }
+    .actions {
+      flex: 1;
+      // button {
+      //   width: 50px;
+      //   height: 50px;
+      //   border-radius: 50%;
+      //   border: 1px solid;
+      // }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+page-overall {
+  scroll-content {
+    display: flex;
+    flex-direction: column;
+  }
+  ion-grid {
+    padding: 0;
+    height: 100%;
+    .content {
+      flex: 3;
+      ion-card ion-card-content {
+        height: 100%;
+        ion-grid {
+          ion-row {
+            ion-col {
+              height: 100%;
+              justify-content: center;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              h2 {
+                flex: 1;
+              }
+            }
+          }
+          ion-row:nth-child(odd) {
+            flex: 3;
+          }
+          ion-row:nth-child(even) {
+            flex: 4;
+          }
+        }
+      }
+    }
+    .actions {
+      flex: 1;
+      .left-options,
+      .right-options {
+        height: 100%;
+        justify-content: center;
+        display: flex;
+        align-items: flex-end;
+        button {
+          width: 70px;
+          height: 70px;
+          font-size: 2rem;
+        }
+      }
+      .center-options {
+        height: 100%;
+        button {
+          width: 90px;
+          height: 90px !important;
+          font-size: 2.8rem;
+        }
+      }
+    }
+  }
+}
