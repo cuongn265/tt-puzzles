@@ -19,17 +19,17 @@
     <div class="lvl-selection-group">
       <ion-row>
         <ion-col col-12>
-          <button ion-button outline large class="btn-lvl-selection lvl-easy" (click)="playMode('easy')">Whirlwind</button>
+          <button ion-button outline large class="btn-lvl-selection lvl-easy" [navPush]="stagePage" [navParams]="{mode: 'whirlwind'}">Whirlwind</button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col col-12>
-          <button ion-button outline large class="btn-lvl-selection lvl-normal" (click)="playMode('normal')">Cyclone</button>
+          <button ion-button outline large class="btn-lvl-selection lvl-normal" [navPush]="stagePage" [navParams]="{mode: 'cyclone'}">Cyclone</button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col col-12>
-          <button ion-button outline large class="btn-lvl-selection lvl-hard" (click)="playMode('hard')">Tornado</button>
+          <button ion-button outline large class="btn-lvl-selection lvl-hard" [navPush]="stagePage" [navParams]="{mode: 'tornado'}">Tornado</button>
         </ion-col>
       </ion-row>
     </div>
