@@ -16,12 +16,12 @@ import { LevelSelectionPage } from "../pages/level-selection/level-selection";
 import { LevelSelectionModule } from "../pages/level-selection/level-selection.module";
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyC5V9OYfSXu0GclHFSA9BlM9Oj3jyBY0kA",
-  authDomain: "news-776a8.firebaseapp.com",
-  databaseURL: "https://news-776a8.firebaseio.com",
-  projectId: "news-776a8",
-  storageBucket: "news-776a8.appspot.com",
-  messagingSenderId: "508155161033"
+  apiKey: "AIzaSyDU7vWpWfEpYqagkmcmOEVqZDlzS0lTHt4",
+  authDomain: "tongue-twister-puzzles.firebaseapp.com",
+  databaseURL: "https://tongue-twister-puzzles.firebaseio.com",
+  projectId: "tongue-twister-puzzles",
+  storageBucket: "tongue-twister-puzzles.appspot.com",
+  messagingSenderId: "633182245850"
 };
 
 
@@ -34,7 +34,7 @@ export const firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     StageModule,
-    OverallModule
+    OverallModule,
     AngularFireModule.initializeApp(firebaseConfig),
     LevelSelectionModule
   ],

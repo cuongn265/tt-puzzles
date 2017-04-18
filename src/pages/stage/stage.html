@@ -6,13 +6,13 @@
           <ion-grid>
             <ion-row class="header">
               <ion-col>
-                <h1 text-center>Twister #1</h1>
+                <h1 text-center>Twister #{{twisterIndex+1}}</h1>
               </ion-col>
             </ion-row>
             <ion-row class="body">
               <ion-grid>
                 <ion-row class="challenge">
-                  <p>As one black bug, bled blue, black blood. The other back bug bled blue.</p>
+                  <p>{{twisterText}}</p>
                 </ion-row>
                 <ion-row justify-content-center>
                   <button class="btn-circle" ion-button icon-only outline round mode="md" color="light">
@@ -36,9 +36,6 @@
     </ion-row>
     <ion-row class="actions">
       <ion-col col-4 align-self-end text-left class="left-options">
-        <button class="btn-circle" ion-button icon-only round="true" mode="md" color="transparent">
-          <ion-icon name="arrow-round-back"></ion-icon>
-        </button>
       </ion-col>
 
       <ion-col col-4 align-self-end text-center class="center-options">
@@ -48,7 +45,7 @@
       </ion-col>
 
       <ion-col col-4 align-self-end text-right class="right-options">
-        <button class="btn-circle" ion-button icon-only round="true" mode="md" color="transparent">
+        <button class="btn-circle" ion-button icon-only round="true" mode="md" color="transparent" (click)="goToNextTwister()">
           <ion-icon name="arrow-round-forward"></ion-icon>
         </button>
       </ion-col>
