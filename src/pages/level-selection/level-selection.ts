@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from "../home/home";
 import { StagePage } from "../stage/stage";
 
+
+
+
 /**
  * Generated class for the LevelSelection page.
  *
@@ -12,7 +15,7 @@ import { StagePage } from "../stage/stage";
 @IonicPage()
 @Component({
   selector: 'page-level-selection',
-  templateUrl: 'level-selection.html',
+  templateUrl: 'level-selection.html'
 })
 export class LevelSelectionPage {
   private stagePage;
@@ -25,12 +28,12 @@ export class LevelSelectionPage {
     console.log('ionViewDidLoad LevelSelection');
   }
 
-  goHome(){
+  goHome() {
     this.navCtrl.push(HomePage);
   }
 
-  playMode( selectedMode: any){
-    console.log('Play '+selectedMode);
+  playMode(selectedMode: any) {
+    console.log('Play ' + selectedMode);
   }
 
 }
