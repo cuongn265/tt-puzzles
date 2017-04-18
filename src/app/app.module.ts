@@ -1,3 +1,4 @@
+import { OverallModule } from './../pages/overall/overall.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -8,6 +9,9 @@ import { AngularFireModule } from "angularfire2";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+
+import { StageModule } from "../pages/stage/stage.module";
+
 import { LevelSelectionPage } from "../pages/level-selection/level-selection";
 import { LevelSelectionModule } from "../pages/level-selection/level-selection.module";
 
@@ -20,6 +24,7 @@ export const firebaseConfig = {
   messagingSenderId: "508155161033"
 };
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -28,6 +33,8 @@ export const firebaseConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    StageModule,
+    OverallModule
     AngularFireModule.initializeApp(firebaseConfig),
     LevelSelectionModule
   ],
