@@ -1,0 +1,47 @@
+<!--
+  Generated template for the LevelSelection page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+
+<ion-content padding style="background-image: url('http://materialdesignblog.com/wp-content/uploads/2016/06/image3.jpg')">
+  <ion-grid>
+    <!-- Page Title -->
+    <ion-row class="header">
+      <ion-col>
+        <h1>Level Selection</h1>
+      </ion-col>
+    </ion-row>
+
+    <div class="lvl-selection-group">
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button outline large class="btn-lvl-selection lvl-easy" (click)="playMode('easy')">Whirlwind</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button outline large class="btn-lvl-selection lvl-normal" (click)="playMode('normal')">Cyclone</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button outline large class="btn-lvl-selection lvl-hard" (click)="playMode('hard')">Tornado</button>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <ion-row>
+      <ion-col col-12 text-left>
+        <button ion-button icon-only outline class="btn-home" (click)="goHome()">
+          <ion-icon name="home"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</ion-content>
