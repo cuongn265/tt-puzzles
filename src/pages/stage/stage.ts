@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFire, FirebaseListObservable } from "angularfire2";
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { AngularFire } from "angularfire2";
+import { StringComparisonService } from "../../technicals/StringComparison.service";
+// Text to speech
+import { TextToSpeech } from '@ionic-native/text-to-speech';
 
+// Import Speech to Text
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+
+import { OverallPage } from "../overall/overall";
 
 /**
  * Generated class for the Stage page.
@@ -25,12 +32,37 @@ export class StagePage {
     attempts_taken: Number,
     avg_accuracy: Number
   }[] = [];
-  
+
+  speechList: Array<string> = [];
+
+  // Data
   private twisterIndex: number = 0;
   private twisterText: any = "";
-  private endOfTwister: boolean = false;
+  private userAnswer: String = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private angularFire: AngularFire) {
+
+  // Counters & Flags
+  private endOfTwister: boolean = false;
+  private attemptsRemaining: number = 5;
+  private startListening: boolean = false;
+
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private angularFire: AngularFire,
+    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService) {
+    /**
+     * Perform request check
+     */
+    this.speechRecognition.requestPermission().then(() => { }, () => {
+      let alert = this.alertCtrl.create({
+        title: "Request Permission",
+        message: "Denied"
+      });
+      alert.present();
+    });
+    /**
+     * -------------------------------------------------------------------
+     */
+
+    /** Get Level Mode from Nav Params  */
     this.selectedMode = this.navParams.get('mode');
 
     // check if the list has been initialized
@@ -40,39 +72,86 @@ export class StagePage {
         this.twisterText = this.twisterList[this.twisterIndex].text;
 
         // init the userStatistics
-        for( let twister of this.twisterList){
+        for (let twister of this.twisterList) {
           this.userStatistics.push({
             twisterText: twister.text,
-            attempts_taken: 5,
+            attempts_taken: 0,
             avg_accuracy: undefined
           });
         }
       });
-      //this.twister.text = this.twisterList[0].text;
-      // console.log(this.twister.text);
     }
+  }
+
+  playCurrentTwister(): void {
+    this.textToSpeech.speak(this.twisterText).then(() => {
+      //TODO: Update User Statistic stuffs.....
+
+    }).catch((err: any) => {
+      let alert = this.alertCtrl.create({
+        title: "Something happened",
+        message: err
+      });
+      alert.present();
+    })
+  }
+
+  /** Attemp twister */
+  tryTwister(): void {
+    // Reset userAnswer
+    this.userAnswer = "";
+    this.startListening = true;
+    //Start the recognition process
+    this.speechRecognition.startListening()
+      .subscribe(
+      (matches: Array<string>) => {
+        this.speechList = matches;
+        this.stringComparisonService.returnClosestStringMatch(this.twisterText, this.speechList).then((closestString: String) => {         
+          this.userAnswer = closestString;
+        });
+
+        this.startListening = false;
+        // reduce attemps_remain count;
+        this.attemptsRemaining--;
+      },
+      (err) => {
+        this.startListening = false;
+      }
+      );
 
   }
 
+  /**
+   * Go to the next twister
+   */
   goToNextTwister(): void {
     if (this.endOfTwister) {
       // User has reach the end of Twister List
       // TODO: push to result page
-      console.log("Here is your stats....");
+      console.log("User statistics");
       console.log(this.userStatistics);
-      return;
+      this.navCtrl.push(OverallPage, {
+        userStatistics: this.userStatistics
+      });
     }
     else {
+      /** Update statistics **/
+      this.userStatistics[this.twisterIndex].attempts_taken = 5 - this.attemptsRemaining;
+
+
+      /**Jump to the next twister */
       this.twisterIndex++;
-     
+      
+      // Reset attempt counter
+      this.attemptsRemaining = 5;
+      this.userAnswer = " ";
+      
+
       // check if the next one is the last twister
       if (this.twisterIndex == this.twisterList.length - 1) {
         this.endOfTwister = true;
       }
       this.twisterText = this.twisterList[this.twisterIndex].text;
-
-      // update statistics
-      this.userStatistics[this.twisterIndex].twisterText = this.twisterText;
     }
   }
 
