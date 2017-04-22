@@ -1,4 +1,3 @@
-import * as didYouMean from 'didyoumean';
 /**
  *  String comparison Services
  */
@@ -27,10 +26,14 @@ export class StringComparisonService {
    * @param input : List of string to find the best that match the target
    */
   public returnClosestStringMatch(target: String, input: any[]): Promise<String> {
+    // reset all
+    
     this.targetString = target;
     this.splitTargetString = target.split(" ");
-
+    this.topCandidate = [];
+    this.inputStat = [];
     this.inputList = input;
+    this.closestString = "";
 
 
     for (let candidate of this.inputList) {

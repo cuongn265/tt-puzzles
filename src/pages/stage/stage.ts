@@ -98,13 +98,15 @@ export class StagePage {
 
   /** Attemp twister */
   tryTwister(): void {
+    // Reset userAnswer
+    this.userAnswer = "";
     this.startListening = true;
     //Start the recognition process
     this.speechRecognition.startListening()
       .subscribe(
       (matches: Array<string>) => {
         this.speechList = matches;
-        this.stringComparisonService.returnClosestStringMatch(this.twisterText, this.speechList).then((closestString: String) => {
+        this.stringComparisonService.returnClosestStringMatch(this.twisterText, this.speechList).then((closestString: String) => {         
           this.userAnswer = closestString;
         });
 
@@ -142,7 +144,7 @@ export class StagePage {
       
       // Reset attempt counter
       this.attemptsRemaining = 5;
-      this.userAnswer = "";
+      this.userAnswer = " ";
       
 
       // check if the next one is the last twister
