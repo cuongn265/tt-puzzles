@@ -21,9 +21,9 @@
                 </ion-row>
                 <ion-row class="result">
                   <p>{{userAnswer}}</p>
+                   <div [innerHTML]="formattedString | safeHTML"></div>
                 </ion-row>
               </ion-grid>
-
             </ion-row>
             <ion-row class="attempt">
               <ion-col text-center>
