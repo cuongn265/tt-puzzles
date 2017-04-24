@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+
 import { AngularFire } from "angularfire2";
+
 import { StringComparisonService } from "../../technicals/StringComparison.service";
+import { StringFormatterService } from "../../technicals/StringFormatter.service";
 // Text to speech
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 
@@ -19,7 +22,7 @@ import { OverallPage } from "../overall/overall";
 @IonicPage()
 @Component({
   selector: 'page-stage',
-  templateUrl: 'stage.html',
+  templateUrl: 'stage.html'
 })
 export class StagePage {
   private selectedMode: any;
@@ -46,8 +49,12 @@ export class StagePage {
   private attemptsRemaining: number = 5;
   private startListening: boolean = false;
 
+
+
+
+  private formattedString: String = "";
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private angularFire: AngularFire,
-    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService) {
+    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService, private stringFormatterService: StringFormatterService) {
     /**
      * Perform request check
      */
@@ -106,7 +113,7 @@ export class StagePage {
       .subscribe(
       (matches: Array<string>) => {
         this.speechList = matches;
-        this.stringComparisonService.returnClosestStringMatch(this.twisterText, this.speechList).then((closestString: String) => {         
+        this.stringComparisonService.returnClosestStringMatch(this.twisterText, this.speechList).then((closestString: String) => {
           this.userAnswer = closestString;
         });
 
@@ -141,11 +148,11 @@ export class StagePage {
 
       /**Jump to the next twister */
       this.twisterIndex++;
-      
+
       // Reset attempt counter
       this.attemptsRemaining = 5;
       this.userAnswer = " ";
-      
+
 
       // check if the next one is the last twister
       if (this.twisterIndex == this.twisterList.length - 1) {

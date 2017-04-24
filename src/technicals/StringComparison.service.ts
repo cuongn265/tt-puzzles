@@ -1,6 +1,7 @@
 /**
  *  String comparison Services
  */
+import { StringFormatterService } from "./StringFormatter.service";
 
 export class StringComparisonService {
 
