@@ -2,5 +2,11 @@
   "name": "tt-puzzles",
   "app_id": "044dcd89",
   "v2": true,
-  "typescript": true
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/oxfordapi",
+      "proxyUrl": "https://od-api.oxforddictionaries.com/api/v1/entries/en"
+    }
+  ]
 }

@@ -1,10 +1,11 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { AngularFire } from "angularfire2";
 
-import { StringComparisonService } from "../../technicals/StringComparison.service";
-import { StringFormatterService } from "../../technicals/StringFormatter.service";
+import { StringComparisonService } from "../../services/StringComparison.service";
+import { StringFormatterService } from "../../services/StringFormatter.service";
+import { OxfordVocabularyService } from "../../services/OxfordVocabularyService";
 // Text to speech
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 
@@ -54,10 +55,13 @@ export class StagePage {
 
   private formattedString: String = "";
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private angularFire: AngularFire,
-    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService, private stringFormatterService: StringFormatterService) {
+    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService, private stringFormatterService: StringFormatterService, private oxfordService: OxfordVocabularyService) {
     /**
      * Perform request check
      */
+    this.oxfordService.getWordIPA("random").then(ipa => {
+      console.log(ipa);
+    });
     this.speechRecognition.requestPermission().then(() => { }, () => {
       let alert = this.alertCtrl.create({
         title: "Request Permission",

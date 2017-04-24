@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
+import { HttpModule } from "@angular/http";
 import { IonicPageModule } from 'ionic-angular';
 import { StagePage } from './stage';
 import { TextToSpeech } from "@ionic-native/text-to-speech";
 import { SpeechRecognition } from "@ionic-native/speech-recognition";
 
-import { StringComparisonService } from "../../technicals/StringComparison.service";
-import { StringFormatterService } from "../../technicals/StringFormatter.service";
+import { StringComparisonService } from "../../services/StringComparison.service";
+import { StringFormatterService } from "../../services/StringFormatter.service";
 import { SafeHTMLPipe } from "../../pipes/safeHTML.pipe";
-
-import { } from "../";
+import { OxfordVocabularyService } from "../../services/OxfordVocabularyService";
 @NgModule({
   declarations: [
     StagePage, SafeHTMLPipe
   ],
   imports: [
-    IonicPageModule.forChild(StagePage),
+    IonicPageModule.forChild(StagePage), HttpModule
   ],
   exports: [
     StagePage
   ],
-  providers: [TextToSpeech, SpeechRecognition, StringComparisonService, StringFormatterService]
+  providers: [TextToSpeech, SpeechRecognition, StringComparisonService, StringFormatterService, OxfordVocabularyService]
 })
 export class StageModule { }
