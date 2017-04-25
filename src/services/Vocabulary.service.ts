@@ -5,7 +5,7 @@ import { configuration } from "../configuration/configuration";
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class OxfordVocabularyService {
+export class VocabularyService {
 
   /**
    * Oxford Dictionary API - Auth
@@ -111,7 +111,7 @@ export class OxfordVocabularyService {
     return options;
   }
 
-  public getWordIPAFromBluemix(word: String): Promise<any> {
+  private getWordIPAFromBluemix(word: String): Promise<any> {
     let options = this.generateRequestOptionsForBluemix();
     return this.http.get('bluemixapi/' + this.bluemixBaseRequestURL_prefix + word + this.bluemixBaseRequestURL_suffix, options).toPromise().then((response) => {
       let responseJson = response.json();

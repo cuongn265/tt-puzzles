@@ -8,7 +8,7 @@ import { SpeechRecognition } from "@ionic-native/speech-recognition";
 import { StringComparisonService } from "../../services/StringComparison.service";
 import { StringFormatterService } from "../../services/StringFormatter.service";
 import { SafeHTMLPipe } from "../../pipes/safeHTML.pipe";
-import { OxfordVocabularyService } from "../../services/OxfordVocabulary.service";
+import { VocabularyService } from "../../services/Vocabulary.service";
 @NgModule({
   declarations: [
     StagePage, SafeHTMLPipe
@@ -19,6 +19,6 @@ import { OxfordVocabularyService } from "../../services/OxfordVocabulary.service
   exports: [
     StagePage
   ],
-  providers: [TextToSpeech, SpeechRecognition, StringComparisonService, StringFormatterService, OxfordVocabularyService]
+  providers: [TextToSpeech, SpeechRecognition, StringComparisonService, StringFormatterService, VocabularyService]
 })
 export class StageModule { }
