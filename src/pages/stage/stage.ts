@@ -59,10 +59,9 @@ export class StagePage {
     /**
      * Perform request check
      */
-    //this.formattedString = this.stringFormatterService.returnFormattedAnswer('Four furious friends fought for the phone', 'For furious friend fought for the fone');
-    this.vocabularyService.returnIPAOfString("Four furious friends fought for the bitchy phone of mine").then((ipaString) => {
-      console.log('Here is your string');
-      console.log(ipaString);
+    this.stringFormatterService.returnFormattedAnswer('Four furious friends fought for the phone', 'For furious friend fought for the fone').then((response) => {
+      console.log('Here is your object');
+      console.log(response);
     });
     this.speechRecognition.requestPermission().then(() => { }, () => {
       let alert = this.alertCtrl.create({

@@ -58,8 +58,6 @@ export class VocabularyService {
         this.getWordIPA(word.text).then(wordIPA => {
           word.ipa = wordIPA;
           resolve(wordIPA);
-          console.log("handled word");
-          console.log(wordIPA);
         });
       });
     });
