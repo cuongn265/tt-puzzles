@@ -59,10 +59,12 @@ export class StagePage {
     /**
      * Perform request check
      */
-    this.oxfordService.returnIPAOfString("Four furious friends fought for the bitchy phone of mine cars").then((ipaString) => {
+    this.formattedString = this.stringFormatterService.returnFormattedAnswer('Four furious friends fought for the phone', 'For furious friend fought for the fone');
+    this.oxfordService.returnIPAOfString("Four furious friends fought for the bitchy phone of mine").then((ipaString) => {
       console.log('Here is your string');
       console.log(ipaString);
     });
+    this.oxfordService.getWordIPAFromBluemix('friends');
     this.speechRecognition.requestPermission().then(() => { }, () => {
       let alert = this.alertCtrl.create({
         title: "Request Permission",

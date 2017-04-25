@@ -7,6 +7,10 @@
     {
       "path": "/oxfordapi",
       "proxyUrl": "https://od-api.oxforddictionaries.com/api/v1/entries/en"
+    },
+    {
+      "path": "/bluemixapi",
+      "proxyUrl": "https://stream.watsonplatform.net/text-to-speech/api/v1"
     }
   ]
 }
