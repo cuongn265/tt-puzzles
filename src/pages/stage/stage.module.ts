@@ -8,7 +8,7 @@ import { SpeechRecognition } from "@ionic-native/speech-recognition";
 import { StringComparisonService } from "../../services/StringComparison.service";
 import { StringFormatterService } from "../../services/StringFormatter.service";
 import { SafeHTMLPipe } from "../../pipes/safeHTML.pipe";
-import { OxfordVocabularyService } from "../../services/OxfordVocabularyService";
+import { OxfordVocabularyService } from "../../services/OxfordVocabulary.service";
 @NgModule({
   declarations: [
     StagePage, SafeHTMLPipe

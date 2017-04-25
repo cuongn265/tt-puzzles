@@ -5,7 +5,7 @@ import { AngularFire } from "angularfire2";
 
 import { StringComparisonService } from "../../services/StringComparison.service";
 import { StringFormatterService } from "../../services/StringFormatter.service";
-import { OxfordVocabularyService } from "../../services/OxfordVocabularyService";
+import { OxfordVocabularyService } from "../../services/OxfordVocabulary.service";
 // Text to speech
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 
@@ -59,8 +59,9 @@ export class StagePage {
     /**
      * Perform request check
      */
-    this.oxfordService.getWordIPA("random").then(ipa => {
-      console.log(ipa);
+    this.oxfordService.returnIPAOfString("Four furious friends fought for the bitchy phone of mine cars").then((ipaString) => {
+      console.log('Here is your string');
+      console.log(ipaString);
     });
     this.speechRecognition.requestPermission().then(() => { }, () => {
       let alert = this.alertCtrl.create({
