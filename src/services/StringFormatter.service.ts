@@ -41,7 +41,7 @@ export class StringFormatterService {
     };
 
     this.pushWordsToWordsArrayStat(target);
-    this.detectErrorInTargetFromInput(target);
+    this.detectErrorInTargetFromInput(input);
 
     return new Promise((resolve) => {
       this.updateIPAofWordInWordsArrayStat(target).then((wordsArrayStat) => {

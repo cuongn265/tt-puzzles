@@ -33,8 +33,8 @@ export class StagePage {
   //statisticList: Store user statistic
   private userStatistics: {
     twisterText: String,
-    attempts_taken: Number,
-    avg_accuracy: Number
+    attempts_taken: number,
+    avg_accuracy: number
   }[] = [];
 
   speechList: Array<string> = [];
@@ -42,27 +42,36 @@ export class StagePage {
   // Data
   private twisterIndex: number = 0;
   private twisterText: any = "";
-  private userAnswer: String = "";
 
+
+  private formattedAnswer: {
+    wordString: string,
+    ipaString: string
+  } = {
+    wordString: undefined,
+    ipaString: undefined
+  }
+
+  private twisterIPA: any = "";
+  private resultString: string = "";
+  private userAnswer: string = "";
 
   // Counters & Flags
   private endOfTwister: boolean = false;
-  private attemptsRemaining: number = 5;
   private startListening: boolean = false;
 
+  /**
+   * showResult: show the format result of twister text and IPAresult
+   */
+  private showResult: boolean = false;
 
 
 
-  private formattedString: String = "";
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private angularFire: AngularFire,
-    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService, private stringFormatterService: StringFormatterService, private vocabularyService: VocabularyService) {
+    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService, private stringFormatterService: StringFormatterService) {
     /**
      * Perform request check
      */
-    this.stringFormatterService.returnFormattedAnswer('Four furious friends fought for the phone', 'For furious friend fought for the fone').then((response) => {
-      console.log('Here is your object');
-      console.log(response);
-    });
     this.speechRecognition.requestPermission().then(() => { }, () => {
       let alert = this.alertCtrl.create({
         title: "Request Permission",
@@ -96,6 +105,7 @@ export class StagePage {
   }
 
   playCurrentTwister(): void {
+    this.userAnswer = "";
     this.textToSpeech.speak(this.twisterText).then(() => {
       //TODO: Update User Statistic stuffs.....
 
@@ -110,27 +120,30 @@ export class StagePage {
 
   /** Attemp twister */
   tryTwister(): void {
-    // Reset userAnswer
-    this.userAnswer = "";
+
     this.startListening = true;
     //Start the recognition process
     this.speechRecognition.startListening()
       .subscribe(
       (matches: Array<string>) => {
         this.speechList = matches;
-        this.stringComparisonService.returnClosestStringMatch(this.twisterText, this.speechList).then((closestString: String) => {
+        this.stringComparisonService.returnClosestStringMatch(this.twisterText, this.speechList).then((closestString: string) => {
           this.userAnswer = closestString;
+
+          // show result
+          this.stringFormatterService.returnFormattedAnswer(this.twisterText, this.userAnswer).then((formattedAnswer) => {
+            this.formattedAnswer = formattedAnswer;
+            this.showResult = true;
+          })
         });
 
         this.startListening = false;
-        // reduce attemps_remain count;
-        this.attemptsRemaining--;
+        this.userStatistics[this.twisterIndex].attempts_taken++;
       },
       (err) => {
         this.startListening = false;
       }
       );
-
   }
 
   /**
@@ -147,17 +160,11 @@ export class StagePage {
       });
     }
     else {
-      /** Update statistics **/
-      this.userStatistics[this.twisterIndex].attempts_taken = 5 - this.attemptsRemaining;
-
-
       /**Jump to the next twister */
       this.twisterIndex++;
 
-      // Reset attempt counter
-      this.attemptsRemaining = 5;
       this.userAnswer = " ";
-
+      this.showResult = false;
 
       // check if the next one is the last twister
       if (this.twisterIndex == this.twisterList.length - 1) {
