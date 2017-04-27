@@ -73,17 +73,7 @@ export class StringComparisonService {
       if (this.inputStat[j].score == max)
         this.topCandidate.push(this.inputStat[j].originalString);
     }
-
-
-    
     this.closestString = this.inputStat[index].originalString;
     return Promise.resolve(this.closestString);
-
-    /**  */
-
-
-
-    //return Promise.resolve(this.inputStat[index].originalString);
-
   }
 }

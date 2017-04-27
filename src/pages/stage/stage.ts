@@ -31,7 +31,7 @@ export class StagePage {
 
   //statisticList: Store user statistic
   private userStatistics: {
-    twisterText: String,
+    twisterText: string,
     attempts_taken: number,
     avg_accuracy: number
   }[] = [];
@@ -40,7 +40,7 @@ export class StagePage {
 
   // Data
   private twisterIndex: number = 0;
-  private twisterText: any = "";
+  private twisterText: string = "";
 
 
   private formattedAnswer: {
@@ -119,6 +119,29 @@ export class StagePage {
 
   /** Attemp twister */
   tryTwister(): void {
+
+    /* This part is especially intend for desktop coding, remove this part on finish */
+    this.speechRecognition.isRecognitionAvailable().then((readyToGo: boolean) => {
+      if (readyToGo == false) {
+
+      }
+    }).catch(err => {
+      // Perform dummy processing from here
+      this.startListening = true;
+      let numberOfCharacterToKeep = Math.floor((Math.random() * this.twisterText.length / 2) + this.twisterText.length / 3);
+
+      // simulate userAnswer
+      this.userAnswer = this.twisterText.slice(0, numberOfCharacterToKeep);
+      // show result
+      this.stringFormatterService.returnFormattedAnswer(this.twisterText, this.userAnswer).then((formattedAnswer) => {
+        this.formattedAnswer = formattedAnswer;
+        this.showResult = true;
+      });
+      this.startListening = false;
+      this.userStatistics[this.twisterIndex].attempts_taken++;
+    });
+    /* ----------------------------------------------------------------------------------- */
+
 
     this.startListening = true;
     //Start the recognition process
