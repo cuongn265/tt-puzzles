@@ -19,6 +19,9 @@
                 <ion-row>
                   <div [innerHTML]="formattedAnswer.ipaString | safeHTML" *ngIf="showResult"></div>
                 </ion-row>
+                <ion-row>
+                  <p *ngIf="showResult">{{percentageCounter}}</p>
+                </ion-row>
                 <ion-row justify-content-center>
                   <button class="btn-circle" ion-button icon-only outline round mode="md" color="light" (click)="playCurrentTwister()">
                     <ion-icon name="volume-up"></ion-icon>

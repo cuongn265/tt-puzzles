@@ -134,10 +134,27 @@ export class StagePage {
       this.userAnswer = this.twisterText.slice(0, numberOfCharacterToKeep);
       // show result
       this.stringFormatterService.returnFormattedAnswer(this.twisterText, this.userAnswer).then((formattedAnswer) => {
+        this.percentageCounter = 0;
         this.formattedAnswer = formattedAnswer;
         console.log(formattedAnswer);
         this.showResult = true;
+
+        // perform some magic effect
+        let runCounterEffect = setInterval(() => {
+          this.percentageCounter = Math.round((this.percentageCounter+0.47)*100)/100;
+          if (this.percentageCounter >= this.formattedAnswer.correctPercentage){
+            this.percentageCounter = this.formattedAnswer.correctPercentage;
+            clearInterval(runCounterEffect);
+          }
+        }, 20);
+
+
+
       });
+
+
+
+
       this.startListening = false;
       this.userStatistics[this.twisterIndex].attempts_taken++;
     });
@@ -185,7 +202,7 @@ export class StagePage {
     else {
       /**Jump to the next twister */
       this.twisterIndex++;
-
+      this.percentageCounter = 0;
       this.userAnswer = " ";
       this.showResult = false;
 
