@@ -12,23 +12,19 @@
             <ion-row class="body">
               <ion-grid>
                 <ion-row class="challenge">
-                  <p>{{twisterText}}</p>
+                  <p [hidden]="showResult">{{twisterText}}</p>
+                  <div [innerHTML]="formattedAnswer.wordString | safeHTML" *ngIf="showResult"></div>
+                </ion-row>
+                <!-- -->
+                <ion-row>
+                  <div [innerHTML]="formattedAnswer.ipaString | safeHTML" *ngIf="showResult"></div>
                 </ion-row>
                 <ion-row justify-content-center>
                   <button class="btn-circle" ion-button icon-only outline round mode="md" color="light" (click)="playCurrentTwister()">
                     <ion-icon name="volume-up"></ion-icon>
                   </button>
                 </ion-row>
-                <ion-row class="result">
-                  <p>{{userAnswer}}</p>
-                   <div [innerHTML]="formattedString | safeHTML"></div>
-                </ion-row>
               </ion-grid>
-            </ion-row>
-            <ion-row class="attempt">
-              <ion-col text-center>
-                <p>Attempts: {{attemptsRemaining}}</p>
-              </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card-content>

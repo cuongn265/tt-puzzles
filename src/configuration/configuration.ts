@@ -7,7 +7,8 @@ export const configuration = {
   "bluemixAPI": {
     "username": "2fb02bf0-8c20-4cc4-b842-8701132bd86f",
     "password": "bpZoBB1GgrrD",
-    "requestURL_prefix": "pronunciation?text=",
-    "requestURL_suffix": "&format=ipa"
+    "requestURLPartial_prefix": "pronunciation?text=",
+    "requestURL_prefix": "https://stream.watsonplatform.net/text-to-speech/api/v1/pronunciation?text=",
+    "requestURL_suffix": "&format=ipa",
   }
 }
