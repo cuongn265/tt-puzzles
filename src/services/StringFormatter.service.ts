@@ -1,5 +1,6 @@
 import { VocabularyService } from "./Vocabulary.service";
 import { Injectable } from "@angular/core";
+import { Platform } from "ionic-angular";
 /**
  * This service is responsible for String Formatting
  */
@@ -27,9 +28,14 @@ export class StringFormatterService {
   private formattedResult: string;
   private formattedIPAResult: string;
 
-  constructor(private vocabularyService: VocabularyService) {
+  constructor(private vocabularyService: VocabularyService,  private platform: Platform) {
 
   }
+
+  public checkPlatform() {
+    this.vocabularyService.returnIPAOfString('hello world');
+    }
+  
 
 
   public returnFormattedAnswer(target: string, input: string): Promise<any> {

@@ -5,7 +5,6 @@ import { AngularFire } from "angularfire2";
 
 import { StringComparisonService } from "../../services/StringComparison.service";
 import { StringFormatterService } from "../../services/StringFormatter.service";
-import { VocabularyService } from "../../services/Vocabulary.service";
 // Text to speech
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 

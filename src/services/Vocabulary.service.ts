@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Headers, Http, RequestOptions } from "@angular/http";
 import { configuration } from "../configuration/configuration";
+import { Platform } from "ionic-angular";
+
 
 import 'rxjs/add/operator/toPromise';
 
@@ -20,6 +22,7 @@ export class VocabularyService {
    */
   private bluemix_username: any;
   private bluemix_password: any;
+  private bluemixPartialBaseRequestURL_prefix: any;
   private bluemixBaseRequestURL_prefix: any;
   private bluemixBaseRequestURL_suffix: any;
 
@@ -29,7 +32,7 @@ export class VocabularyService {
     ipa: string
   }[];
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private platform: Platform) {
     this.app_id = configuration.oxfordAPI.app_id;
     this.app_key = configuration.oxfordAPI.app_key;
     this.oxfordBaseRequestURL = configuration.oxfordAPI.requestURL;
@@ -37,10 +40,12 @@ export class VocabularyService {
 
     this.bluemix_username = configuration.bluemixAPI.username;
     this.bluemix_password = configuration.bluemixAPI.password;
-    this.bluemixBaseRequestURL_prefix = configuration.bluemixAPI.requestURL_prefix;
+    this.bluemixPartialBaseRequestURL_prefix = configuration.bluemixAPI.requestURLPartial_prefix;
+    this.bluemixBaseRequestURL_prefix = configuration.bluemixAPI.requestURL_prefix
     this.bluemixBaseRequestURL_suffix = configuration.bluemixAPI.requestURL_suffix;
 
   }
+
 
   public returnIPAOfString(inputString: string): Promise<any> {
     let arrayWordOfInput: any[] = inputString.split(" ");
@@ -75,23 +80,44 @@ export class VocabularyService {
 
   private getWordIPA(word: String): Promise<any> {
     let options = this.generateRequestOptions();
-    return this.http.get('oxfordapi/' + word + '/pronunciations', options).toPromise().then(response => {
-      let word = response.json();
+    if (this.platform.is('core')) {
+      return this.http.get('oxfordapi/' + word + '/pronunciations', options).toPromise().then(response => {
+        let word = response.json();
 
-      // hard coded !!!!
-      //TODO: better parse the response to PronunciationResult class, and call a returnWordIPA inside that class shit to get the ipa
-      let wordIPA = word.results[0].lexicalEntries[0].pronunciations[0].phoneticSpelling;
-      return Promise.resolve(wordIPA);
-    }, err => {
-      return new Promise((resolve) => {
-        this.getWordIPAFromBluemix(word).then((wordIPA) => {
-          return Promise.resolve(wordIPA);
-        }).then((wordIPA) => {
-          wordIPA = wordIPA.substring(1);
-          resolve(wordIPA);
-        });
-      })
-    });
+        // hard coded !!!!
+        //TODO: better parse the response to PronunciationResult class, and call a returnWordIPA inside that class shit to get the ipa
+        let wordIPA = word.results[0].lexicalEntries[0].pronunciations[0].phoneticSpelling;
+        return Promise.resolve(wordIPA);
+      }, err => {
+        return new Promise((resolve) => {
+          this.getWordIPAFromBluemix(word).then((wordIPA) => {
+            return Promise.resolve(wordIPA);
+          }).then((wordIPA) => {
+            wordIPA = wordIPA.substring(1);
+            resolve(wordIPA);
+          });
+        })
+      });
+    }
+    else {
+      return this.http.get(this.oxfordBaseRequestURL + word + '/pronunciations', options).toPromise().then(response => {
+        let word = response.json();
+
+        // hard coded !!!!
+        //TODO: better parse the response to PronunciationResult class, and call a returnWordIPA inside that class shit to get the ipa
+        let wordIPA = word.results[0].lexicalEntries[0].pronunciations[0].phoneticSpelling;
+        return Promise.resolve(wordIPA);
+      }, err => {
+        return new Promise((resolve) => {
+          this.getWordIPAFromBluemix(word).then((wordIPA) => {
+            return Promise.resolve(wordIPA);
+          }).then((wordIPA) => {
+            wordIPA = wordIPA.substring(1);
+            resolve(wordIPA);
+          });
+        })
+      });
+    }
   };
 
   private generateRequestOptions(): RequestOptions {
@@ -111,11 +137,23 @@ export class VocabularyService {
 
   private getWordIPAFromBluemix(word: String): Promise<any> {
     let options = this.generateRequestOptionsForBluemix();
-    return this.http.get('bluemixapi/' + this.bluemixBaseRequestURL_prefix + word + this.bluemixBaseRequestURL_suffix, options).toPromise().then((response) => {
-      let responseJson = response.json();
-      let wordIPA = responseJson.pronunciation;
-      return Promise.resolve(wordIPA);
-    });
+    /**
+     * Use proxy setting if the target device is Desktop
+     */
+    if (this.platform.is('core')) {
+      return this.http.get('bluemixapi/' + this.bluemixPartialBaseRequestURL_prefix + word + this.bluemixBaseRequestURL_suffix, options).toPromise().then((response) => {
+        let responseJson = response.json();
+        let wordIPA = responseJson.pronunciation;
+        return Promise.resolve(wordIPA);
+      });
+    }
+    else {
+      return this.http.get(this.bluemixBaseRequestURL_prefix + word + this.bluemixBaseRequestURL_suffix, options).toPromise().then((response) => {
+        let responseJson = response.json();
+        let wordIPA = responseJson.pronunciation;
+        return Promise.resolve(wordIPA);
+      });
+    }
   }
 
 
