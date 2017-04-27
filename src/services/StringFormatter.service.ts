@@ -19,7 +19,8 @@ export class StringFormatterService {
 
   private formattedResponse: {
     wordString: string,
-    ipaString: string
+    ipaString: string,
+    correctPercentage: number
   }
 
   private splitTargetString: any;
@@ -28,22 +29,26 @@ export class StringFormatterService {
   private formattedResult: string;
   private formattedIPAResult: string;
 
-  constructor(private vocabularyService: VocabularyService,  private platform: Platform) {
+  private numberOfCorrectWord: number = 0;
+  constructor(private vocabularyService: VocabularyService, private platform: Platform) {
 
   }
 
   public checkPlatform() {
     this.vocabularyService.returnIPAOfString('hello world');
-    }
-  
+  }
+
 
 
   public returnFormattedAnswer(target: string, input: string): Promise<any> {
+    // reset all previous data
+    this.numberOfCorrectWord = 0;
     this.formattedResult = " ";
     this.formattedIPAResult = " ";
     this.formattedResponse = {
       wordString: "",
-      ipaString: ""
+      ipaString: "",
+      correctPercentage: 0
     };
 
     this.pushWordsToWordsArrayStat(target);
@@ -57,6 +62,7 @@ export class StringFormatterService {
           if (word.correct == true) {
             formattedWord = CORRECT_PREFIX + word.text + " " + SUFFIX;
             formattedWordIPA = CORRECT_PREFIX + word.ipa + " " + SUFFIX;
+            this.numberOfCorrectWord++;
           }
           else {
             formattedWord = INCORRECT_PREFIX + word.text + " " + SUFFIX;
@@ -65,6 +71,8 @@ export class StringFormatterService {
           this.formattedResult = this.formattedResult.concat(formattedWord);
           this.formattedIPAResult = this.formattedIPAResult.concat(formattedWordIPA);
         }
+
+        this.formattedResponse.correctPercentage = Math.round((this.numberOfCorrectWord / this.splitTargetString.length * 100) * 100) / 100;
         this.formattedResponse.wordString = this.formattedResult;
         this.formattedResponse.ipaString = this.formattedIPAResult;
         resolve(this.formattedResponse);

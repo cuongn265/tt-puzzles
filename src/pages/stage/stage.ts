@@ -45,16 +45,16 @@ export class StagePage {
 
   private formattedAnswer: {
     wordString: string,
-    ipaString: string
+    ipaString: string,
+    correctPercentage: number
   } = {
     wordString: undefined,
-    ipaString: undefined
+    ipaString: undefined,
+    correctPercentage: 0
   }
 
-  private twisterIPA: any = "";
-  private resultString: string = "";
   private userAnswer: string = "";
-
+  private percentageCounter: number = 0;
   // Counters & Flags
   private endOfTwister: boolean = false;
   private startListening: boolean = false;
@@ -135,6 +135,7 @@ export class StagePage {
       // show result
       this.stringFormatterService.returnFormattedAnswer(this.twisterText, this.userAnswer).then((formattedAnswer) => {
         this.formattedAnswer = formattedAnswer;
+        console.log(formattedAnswer);
         this.showResult = true;
       });
       this.startListening = false;
