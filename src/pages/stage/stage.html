@@ -12,7 +12,7 @@
             <ion-row class="body">
               <ion-grid>
                 <ion-row class="challenge">
-                  <p [hidden]="showResult">{{twisterText}}</p>
+                  <p [hidden]="showResult">{{currentTwister.text}}</p>
                   <div [innerHTML]="formattedAnswer.wordString | safeHTML" *ngIf="showResult"></div>
                 </ion-row>
                 <!-- -->
@@ -23,6 +23,11 @@
                   <button class="btn-circle" ion-button icon-only outline round mode="md" color="light" (click)="playCurrentTwister()">
                     <ion-icon name="volume-up"></ion-icon>
                   </button>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <p>Accuracy: {{formattedAnswer.correctPercentage}}</p>
+                  </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-row>
