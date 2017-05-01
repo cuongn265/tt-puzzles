@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 
 import { AngularFire } from "angularfire2";
 
 import { StringComparisonService } from "../../services/StringComparison.service";
 import { StringFormatterService } from "../../services/StringFormatter.service";
+import { VocabularyService } from "../../services/Vocabulary.service";
 // Text to speech
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 
@@ -27,21 +28,32 @@ import { OverallPage } from "../overall/overall";
 export class StagePage {
   private selectedMode: any;
   // twisterList: Store twister list from server
-  private twisterList: any[];
+  private twisterList: {
+    text: string,
+    IPA: string
+  }[];
 
   //statisticList: Store user statistic
   private userStatistics: {
     twisterText: string,
     attempts_taken: number,
-    avg_accuracy: number
-  }[] = [];
+    correctPercentage: number
+  }[] = [
+
+  ];
 
   speechList: Array<string> = [];
 
   // Data
   private twisterIndex: number = 0;
-  private twisterText: string = "";
 
+  private currentTwister: {
+    text: string,
+    ipa: string
+  } = {
+    text: undefined,
+    ipa: undefined
+  }
 
   private formattedAnswer: {
     wordString: string,
@@ -54,10 +66,10 @@ export class StagePage {
   }
 
   private userAnswer: string = "";
-  private percentageCounter: number = 0;
   // Counters & Flags
   private endOfTwister: boolean = false;
   private startListening: boolean = false;
+  private fetchingData: boolean = false;
 
   /**
    * showResult: show the format result of twister text and IPAresult
@@ -66,8 +78,9 @@ export class StagePage {
 
 
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private angularFire: AngularFire,
-    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService, private stringFormatterService: StringFormatterService) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public navParams: NavParams, private angularFire: AngularFire,
+    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService,
+    private stringFormatterService: StringFormatterService, private vocabularyService: VocabularyService) {
     /**
      * Perform request check
      */
@@ -87,25 +100,32 @@ export class StagePage {
 
     // check if the list has been initialized
     if (this.navParams.get('twisterList') == null) {
+      /* Data loading spinner */
+      let dataLoading = loadingCtrl.create({
+        content: 'Preparing twisters, please wait...'
+      });
+      dataLoading.present();
+
       this.angularFire.database.list('/' + this.selectedMode).subscribe(list => {
         this.twisterList = list;
-        this.twisterText = this.twisterList[this.twisterIndex].text;
-
+        this.currentTwister.text = this.twisterList[this.twisterIndex].text;
         // init the userStatistics
         for (let twister of this.twisterList) {
           this.userStatistics.push({
             twisterText: twister.text,
             attempts_taken: 0,
-            avg_accuracy: undefined
+            correctPercentage: 0
           });
         }
+
+        /*Dismiss loading */
+        dataLoading.dismiss();
       });
     }
   }
 
   playCurrentTwister(): void {
-    this.userAnswer = "";
-    this.textToSpeech.speak(this.twisterText).then(() => {
+    this.textToSpeech.speak(this.currentTwister.text).then(() => {
       //TODO: Update User Statistic stuffs.....
 
     }).catch((err: any) => {
@@ -114,12 +134,11 @@ export class StagePage {
         message: err
       });
       alert.present();
-    })
+    });
   }
 
   /** Attemp twister */
   tryTwister(): void {
-
     /* This part is especially intend for desktop coding, remove this part on finish */
     this.speechRecognition.isRecognitionAvailable().then((readyToGo: boolean) => {
       if (readyToGo == false) {
@@ -128,35 +147,42 @@ export class StagePage {
     }).catch(err => {
       // Perform dummy processing from here
       this.startListening = true;
-      let numberOfCharacterToKeep = Math.floor((Math.random() * this.twisterText.length / 2) + this.twisterText.length / 3);
+      let numberOfCharacterToKeep = Math.floor((Math.random() * this.currentTwister.text.length / 2) + this.currentTwister.text.length / 3);
 
       // simulate userAnswer
-      this.userAnswer = this.twisterText.slice(0, numberOfCharacterToKeep);
-      // show result
-      this.stringFormatterService.returnFormattedAnswer(this.twisterText, this.userAnswer).then((formattedAnswer) => {
-        this.percentageCounter = 0;
-        this.formattedAnswer = formattedAnswer;
-        console.log(formattedAnswer);
-        this.showResult = true;
-
-        // perform some magic effect
-        let runCounterEffect = setInterval(() => {
-          this.percentageCounter = Math.round((this.percentageCounter+0.47)*100)/100;
-          if (this.percentageCounter >= this.formattedAnswer.correctPercentage){
-            this.percentageCounter = this.formattedAnswer.correctPercentage;
-            clearInterval(runCounterEffect);
-          }
-        }, 20);
+      this.userAnswer = this.currentTwister.text.slice(0, numberOfCharacterToKeep);
 
 
 
-      });
-
-
-
-
-      this.startListening = false;
-      this.userStatistics[this.twisterIndex].attempts_taken++;
+      // let loading = this.loadingCtrl.create({
+      //   content: 'let\' see the answer... '
+      // });
+      // loading.present();
+      if (this.currentTwister.ipa == undefined) {
+        this.vocabularyService.returnIPAOfString(this.currentTwister.text).then((IPA) => {
+          this.currentTwister.ipa = IPA;
+          // show result
+          this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
+            this.formattedAnswer = formattedAnswer;
+            this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+            this.userStatistics[this.twisterIndex].attempts_taken++;
+            this.startListening = false;
+            this.showResult = true;
+          });
+          //loading.dismiss();
+        });
+      }
+      else {
+        // show result
+        this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
+          this.formattedAnswer = formattedAnswer;
+          this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+          this.userStatistics[this.twisterIndex].attempts_taken++;
+          this.startListening = false;
+          this.showResult = true;
+         //loading.dismiss();
+        });
+      }
     });
     /* ----------------------------------------------------------------------------------- */
 
@@ -167,18 +193,26 @@ export class StagePage {
       .subscribe(
       (matches: Array<string>) => {
         this.speechList = matches;
-        this.stringComparisonService.returnClosestStringMatch(this.twisterText, this.speechList).then((closestString: string) => {
+        let loading = this.loadingCtrl.create({
+          content: 'let\' see... '
+        });
+        loading.present();
+        this.stringComparisonService.returnClosestStringMatch(this.currentTwister.text, this.speechList).then((closestString: string) => {
           this.userAnswer = closestString;
 
+
           // show result
-          this.stringFormatterService.returnFormattedAnswer(this.twisterText, this.userAnswer).then((formattedAnswer) => {
+          this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
             this.formattedAnswer = formattedAnswer;
+            this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+            this.userStatistics[this.twisterIndex].attempts_taken++;
             this.showResult = true;
+            this.startListening = false;
           })
         });
 
-        this.startListening = false;
-        this.userStatistics[this.twisterIndex].attempts_taken++;
+
+        // this.userStatistics[this.twisterIndex].attempts_taken++;
       },
       (err) => {
         this.startListening = false;
@@ -202,7 +236,6 @@ export class StagePage {
     else {
       /**Jump to the next twister */
       this.twisterIndex++;
-      this.percentageCounter = 0;
       this.userAnswer = " ";
       this.showResult = false;
 
@@ -210,7 +243,11 @@ export class StagePage {
       if (this.twisterIndex == this.twisterList.length - 1) {
         this.endOfTwister = true;
       }
-      this.twisterText = this.twisterList[this.twisterIndex].text;
+      this.currentTwister.text = this.twisterList[this.twisterIndex].text;
+      this.currentTwister.ipa = undefined;
+      // this.vocabularyService.returnIPAOfString(this.currentTwister.text).then((IPA) => {
+      //   this.currentTwister.ipa = IPA;
+      // })
     }
   }
 
