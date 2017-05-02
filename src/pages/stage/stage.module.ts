@@ -4,6 +4,8 @@ import { IonicPageModule } from 'ionic-angular';
 import { StagePage } from './stage';
 import { TextToSpeech } from "@ionic-native/text-to-speech";
 import { SpeechRecognition } from "@ionic-native/speech-recognition";
+import { NativeAudio } from "@ionic-native/native-audio";
+import { SmartAudio } from "../../providers/smart-audio";
 
 import { StringComparisonService } from "../../services/StringComparison.service";
 import { StringFormatterService } from "../../services/StringFormatter.service";
@@ -19,6 +21,6 @@ import { VocabularyService } from "../../services/Vocabulary.service";
   exports: [
     StagePage
   ],
-  providers: [TextToSpeech, SpeechRecognition, StringComparisonService, StringFormatterService, VocabularyService]
+  providers: [TextToSpeech, SpeechRecognition, NativeAudio, SmartAudio, StringComparisonService, StringFormatterService, VocabularyService]
 })
 export class StageModule { }
