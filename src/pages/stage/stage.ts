@@ -12,7 +12,13 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
 // Import Speech to Text
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
+// Import SmartAudio for sound effect
+import { SmartAudio } from "../../providers/smart-audio";
+
+
 import { OverallPage } from "../overall/overall";
+
+import { configuration } from "../../configuration/configuration";
 
 /**
  * Generated class for the Stage page.
@@ -69,18 +75,22 @@ export class StagePage {
   // Counters & Flags
   private endOfTwister: boolean = false;
   private startListening: boolean = false;
-  private fetchingData: boolean = false;
+
 
   /**
-   * showResult: show the format result of twister text and IPAresult
+   * showResult: show the format result of twister text and IPA result
    */
   private showResult: boolean = false;
 
 
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public navParams: NavParams, private angularFire: AngularFire,
-    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private stringComparisonService: StringComparisonService,
+    private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private smartAudio: SmartAudio, private stringComparisonService: StringComparisonService,
     private stringFormatterService: StringFormatterService, private vocabularyService: VocabularyService) {
+    /**Preload Audio files */
+    smartAudio.preload('correct', configuration.sound_effects.correct);
+    smartAudio.preload('incorrect', configuration.sound_effects.incorrect);
+
     /**
      * Perform request check
      */
@@ -94,17 +104,18 @@ export class StagePage {
     /**
      * -------------------------------------------------------------------
      */
-
     /** Get Level Mode from Nav Params  */
     this.selectedMode = this.navParams.get('mode');
-
-    // check if the list has been initialized
-    if (this.navParams.get('twisterList') == null) {
+    //check if the list has been initialized
+    if (this.twisterList == undefined) {
       /* Data loading spinner */
       let dataLoading = loadingCtrl.create({
-        content: 'Preparing twisters, please wait...'
+        content: 'Preparing twisters, please wait...',
+        dismissOnPageChange: true
       });
-      dataLoading.present();
+      dataLoading.present().catch((err)=> {
+        console.log(err);
+      });
 
       this.angularFire.database.list('/' + this.selectedMode).subscribe(list => {
         this.twisterList = list;
@@ -117,9 +128,10 @@ export class StagePage {
             correctPercentage: 0
           });
         }
-
         /*Dismiss loading */
-        dataLoading.dismiss();
+        dataLoading.dismiss().catch((err)=> {
+          console.log(err);
+        });
       });
     }
   }
@@ -163,9 +175,12 @@ export class StagePage {
             this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
               this.formattedAnswer = formattedAnswer;
               this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+              this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
               this.userStatistics[this.twisterIndex].attempts_taken++;
               this.startListening = false;
               this.showResult = true;
+              // Play audio effect
+
             });
             loadingSpinner.dismiss();
           });
@@ -175,6 +190,7 @@ export class StagePage {
           this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
             this.formattedAnswer = formattedAnswer;
             this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+            this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
             this.userStatistics[this.twisterIndex].attempts_taken++;
             this.startListening = false;
             this.showResult = true;
@@ -203,6 +219,7 @@ export class StagePage {
                 this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
                   this.formattedAnswer = formattedAnswer;
                   this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+                  this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
                   this.userStatistics[this.twisterIndex].attempts_taken++;
                   this.startListening = false;
                   this.showResult = true;
@@ -214,6 +231,7 @@ export class StagePage {
               this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
                 this.formattedAnswer = formattedAnswer;
                 this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+                this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
                 this.userStatistics[this.twisterIndex].attempts_taken++;
                 this.startListening = false;
                 this.showResult = true;
@@ -258,6 +276,13 @@ export class StagePage {
     }
   }
 
+  playSoundBaseOnCorrectness(correctnessPercentage: number) {
+    if (correctnessPercentage == 100)
+      this.smartAudio.play('correct');
+    else {
+      this.smartAudio.play('incorrect');
+    }
+  }
 
 
   // generate level depend on selected level

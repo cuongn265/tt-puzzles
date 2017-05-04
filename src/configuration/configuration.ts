@@ -10,5 +10,10 @@ export const configuration = {
     "requestURLPartial_prefix": "pronunciation?text=",
     "requestURL_prefix": "https://stream.watsonplatform.net/text-to-speech/api/v1/pronunciation?text=",
     "requestURL_suffix": "&format=ipa",
+  },
+  "sound_effects": {
+    "correct": "assets/audio/correct.mp3",
+    "incorrect": "assets/audio/incorrect.mp3",
+    "end_game": "assets/audio/end_game.mp3"
   }
 }
