@@ -39,7 +39,9 @@ export class SmartAudio {
       this.sounds.push(audio);
     }
     else {
-      this.nativeAudio.preloadSimple(key, asset);
+      this.nativeAudio.preloadSimple(key, asset).catch((err) => {
+        console.log(err);
+      });
 
       let audio = {
         key: key,
@@ -50,11 +52,17 @@ export class SmartAudio {
     }
   }
 
+  unload(key: any){
+    this.nativeAudio.unload(key).catch((err)=> {
+      console.log(err);
+    })
+  }
+
   play(key: any) {
     let audio = this.sounds.find((sound) => {
       return sound.key === key;
     });
-    
+
     if (audio.type === 'html5') {
       console.log('play song on desktop');
       let audioAsset = new Audio(audio.asset);

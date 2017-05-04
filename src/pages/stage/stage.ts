@@ -104,17 +104,18 @@ export class StagePage {
     /**
      * -------------------------------------------------------------------
      */
-    console.log(this.twisterList);
     /** Get Level Mode from Nav Params  */
     this.selectedMode = this.navParams.get('mode');
-
-    // check if the list has been initialized
+    //check if the list has been initialized
     if (this.twisterList == undefined) {
       /* Data loading spinner */
       let dataLoading = loadingCtrl.create({
-        content: 'Preparing twisters, please wait...'
+        content: 'Preparing twisters, please wait...',
+        dismissOnPageChange: true
       });
-      dataLoading.present();
+      dataLoading.present().catch((err)=> {
+        console.log(err);
+      });
 
       this.angularFire.database.list('/' + this.selectedMode).subscribe(list => {
         this.twisterList = list;
@@ -127,9 +128,10 @@ export class StagePage {
             correctPercentage: 0
           });
         }
-
         /*Dismiss loading */
-        dataLoading.dismiss();
+        dataLoading.dismiss().catch((err)=> {
+          console.log(err);
+        });
       });
     }
   }
