@@ -15,5 +15,53 @@ export const configuration = {
     "correct": "assets/audio/correct.mp3",
     "incorrect": "assets/audio/incorrect.mp3",
     "end_game": "assets/audio/end_game.mp3"
-  }
+  },
+  "number_of_twisters_per_round": 10,
+  "pronunciation_skill_bands": [
+    {
+      "score": 0,
+      "rate": "Troll"
+    },
+    {
+      "score": 10,
+      "rate": "Non-user"
+    },
+    {
+      "score": 20,
+      "rate": "Intermittent"
+    },
+    {
+      "score": 30,
+      "rate": "Extremely limited"
+    },
+    {
+      "score": 40,
+      "rate": "Limited"
+    },
+    {
+      "score": 50,
+      "rate": "Modest"
+    },
+    {
+      "score": 60,
+      "rate": "Competent"
+    },
+    {
+      "score": 70,
+      "rate": "Good"
+    },
+    {
+      "score": 80,
+      "rate": "Very good"
+    },
+    {
+      "score": 90,
+      "rate": "Excellent"
+    },
+    {
+      "score": 100,
+      "rate": "Expert"
+    }
+
+  ]
 }

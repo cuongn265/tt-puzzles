@@ -113,7 +113,7 @@ export class StagePage {
         content: 'Preparing twisters, please wait...',
         dismissOnPageChange: true
       });
-      dataLoading.present().catch((err)=> {
+      dataLoading.present().catch((err) => {
         console.log(err);
       });
 
@@ -129,7 +129,7 @@ export class StagePage {
           });
         }
         /*Dismiss loading */
-        dataLoading.dismiss().catch((err)=> {
+        dataLoading.dismiss().catch((err) => {
           console.log(err);
         });
       });
@@ -174,7 +174,11 @@ export class StagePage {
             // show result
             this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
               this.formattedAnswer = formattedAnswer;
-              this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+
+              //get the highest attempt on twister
+              if (this.formattedAnswer.correctPercentage > this.userStatistics[this.twisterIndex].correctPercentage) {
+                this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+              }
               this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
               this.userStatistics[this.twisterIndex].attempts_taken++;
               this.startListening = false;
@@ -189,7 +193,11 @@ export class StagePage {
           // show result
           this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
             this.formattedAnswer = formattedAnswer;
-            this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+            //get the highest attempt on twister
+            if (this.formattedAnswer.correctPercentage > this.userStatistics[this.twisterIndex].correctPercentage) {
+              this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+            }
+
             this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
             this.userStatistics[this.twisterIndex].attempts_taken++;
             this.startListening = false;
@@ -218,7 +226,6 @@ export class StagePage {
                 this.currentTwister.ipa = IPA;
                 this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
                   this.formattedAnswer = formattedAnswer;
-                  console.log(this.formattedAnswer);
                   this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
                   this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
                   this.userStatistics[this.twisterIndex].attempts_taken++;
@@ -254,10 +261,8 @@ export class StagePage {
   goToNextTwister(): void {
     if (this.endOfTwister) {
       // User has reach the end of Twister List
-      // TODO: push to result page
-      console.log("User statistics");
-      console.log(this.userStatistics);
       this.navCtrl.push(OverallPage, {
+        mode: this.selectedMode,
         userStatistics: this.userStatistics
       });
     }

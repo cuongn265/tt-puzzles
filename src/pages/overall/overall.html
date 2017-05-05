@@ -3,44 +3,44 @@
     <ion-row class="content">
       <!--<ion-card>
         <ion-card-content>-->
-          <ion-grid>
-            <ion-row>
-              <ion-col text-center class="header">
-                <p>Overall Score</p>
-                <p>Cyclone Realm</p>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col text-center class="body">
-                <p>Twister Pass: 7</p>
-                <p>Total Attempts: 20</p>
-                <p>Average Accuracy: 76%</p>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col text-center class="footer">
-                <p> Nicely Done!</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        <!--</ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col text-center class="header">
+            <p>Overall Score</p>
+            <p>{{selectedMode}} Realm</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center class="body">
+            <p>Rank: {{userRate}}</p>
+            <p>Twister Conquered: {{conqueredTwisters}}</p>
+            <p>Average Accuracy: {{averageUserCorrectionPercentage}}%</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center class="footer">
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <!--</ion-card-content>
       </ion-card>-->
     </ion-row>
     <ion-row class="actions">
       <ion-col col-4 align-self-end text-left class="left-options">
-        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent">
+        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent" (click)="goToLevelSelection()">
           <ion-icon name="home"></ion-icon>
         </button>
       </ion-col>
 
       <ion-col col-4 align-self-end text-center class="center-options">
-        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent">
+        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent" (click)="replayLevel()">
           <ion-icon name="refresh"></ion-icon>
         </button>
       </ion-col>
 
       <ion-col col-4 align-self-end text-right class="right-options">
-        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent">
+        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent" (click)="goToResultInDetail()">
           <ion-icon name="list"></ion-icon>
         </button>
       </ion-col>
