@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { configuration } from "../../configuration/configuration";
+import { LevelSelectionPage } from "../level-selection/level-selection";
 /**
  * Generated class for the Overall page.
  *
@@ -14,6 +15,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class OverallPage {
 
+  private averageUserCorrectionPercentage: number = 0;
+  private conqueredTwisters: number = 0;
+
+  private userRate: string;
   private selectedMode: string;
   private userStatistics: {
     twisterText: string,
@@ -21,15 +26,66 @@ export class OverallPage {
     correctPercentage: number
   }[] = undefined;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.selectedMode = this.navParams.get('mode');
+    this.selectedMode = this.capitalizedTwisterModeTitle(this.navParams.get('mode'));
     this.userStatistics = this.navParams.get('userStatistics');
-    console.log('Mode '+this.selectedMode);
-    console.log('stats');
+    console.log('User stats');
     console.log(this.userStatistics);
+    /* Update stats and score stuffs*/
+    this.averageUserCorrectionPercentage = this.calculateOverallScoreBand(this.userStatistics);
+    this.conqueredTwisters = this.returnConqueredTwisters(this.userStatistics);
+    this.userRate = this.returnRateOnOverallScoreBand(this.averageUserCorrectionPercentage);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Overall');
   }
 
+
+  private returnConqueredTwisters(stats: any): number {
+    let conqueredTwister: number = 0;
+    stats.map(function (stat) {
+      if (stat.correctPercentage == 100)
+        conqueredTwister++;
+    })
+    return conqueredTwister;
+  }
+
+  private calculateOverallScoreBand(stats: any): number {
+    let sumPercentage = 0;
+    stats.map(function (stat) {
+      sumPercentage += stat.correctPercentage;
+    });
+
+    let averageScore = Math.round((sumPercentage / configuration.number_of_twisters_per_round) * 100) / 100;
+    //sumPercentage / configuration.number_of_twisters_per_round;
+
+    console.log('Score: ' + averageScore);
+    //let adjustedScore = Math.round((sumPercentage / configuration.number_of_twisters_per_round) / 10) * 10;
+    return averageScore;
+  }
+
+  private returnRateOnOverallScoreBand(averageScore: number): string {
+    let adjustedScore = Math.round(averageScore / 10) * 10;
+    console.log('Adjusted Score: ' + adjustedScore);
+    for (let scoreBand of configuration.pronunciation_skill_bands) {
+      if (adjustedScore === scoreBand.score)
+        return scoreBand.rate;
+    }
+  }
+
+  private capitalizedTwisterModeTitle(mode: string): string {
+    return mode.charAt(0).toUpperCase() + mode.slice(1);
+  }
+
+  private replayLevel() {
+    this.navCtrl.pop();
+  }
+
+  private goToLevelSelection() {
+    this.navCtrl.push(LevelSelectionPage);
+  }
+
+  private goToResultInDetail() {
+
+  }
 }
