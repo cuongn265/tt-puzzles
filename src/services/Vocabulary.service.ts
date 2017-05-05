@@ -12,6 +12,7 @@ export class VocabularyService {
   /**
    * Oxford Dictionary API - Auth
    */
+  private inputString: string = "";
   private app_id: any;
   private app_key: any;
   private oxfordBaseRequestURL: any;
@@ -48,7 +49,8 @@ export class VocabularyService {
 
 
   public returnIPAOfString(inputString: string): Promise<any> {
-    let arrayWordOfInput: any[] = inputString.split(" ");
+    this.inputString = inputString.replace(/[,.]/g, "");
+    let arrayWordOfInput: any[] = this.inputString.split(" ");
     this.wordArrayIPA = [];
 
     arrayWordOfInput.map((word) => {
@@ -72,7 +74,7 @@ export class VocabularyService {
         let ipaString: string = "";
         this.wordArrayIPA.map((word) => {
           ipaString = ipaString.concat(word.ipa).concat(' ');
-        })
+        });
         resolve(ipaString);
       })
     })
@@ -80,6 +82,9 @@ export class VocabularyService {
 
   private getWordIPA(word: String): Promise<any> {
     let options = this.generateRequestOptions();
+    if (word == '') {
+      return Promise.resolve('');
+    }
     if (this.platform.is('core')) {
       return this.http.get('oxfordapi/' + word + '/pronunciations', options).toPromise().then(response => {
         let word = response.json();
