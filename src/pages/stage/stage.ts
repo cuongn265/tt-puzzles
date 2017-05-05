@@ -218,6 +218,7 @@ export class StagePage {
                 this.currentTwister.ipa = IPA;
                 this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
                   this.formattedAnswer = formattedAnswer;
+                  console.log(this.formattedAnswer);
                   this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
                   this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
                   this.userStatistics[this.twisterIndex].attempts_taken++;

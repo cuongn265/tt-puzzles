@@ -45,6 +45,7 @@ export class StringFormatterService {
   public returnFormattedAnswer(targetRequest: any, input: string): Promise<any> {
     // reset all previous data
     this.targetRequest = targetRequest;
+    this.targetRequest.text = this.targetRequest.text.replace(/[,.]/g, "");
     this.numberOfCorrectWord = 0;
     this.formattedResult = " ";
     this.formattedIPAResult = " ";
@@ -101,7 +102,7 @@ export class StringFormatterService {
     this.splitInputString = input.split(" ");
     for (let comparedWord of this.splitInputString) {
       this.wordsArrayStat.map(function (word) {
-        if (word.text == comparedWord)
+        if (word.text.toLowerCase() == comparedWord.toLowerCase())
           word.correct = true;
       });
     }

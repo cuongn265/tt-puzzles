@@ -4,7 +4,7 @@
 export class StringComparisonService {
 
   /**Target String for the comparison */
-  private targetString: any = "";
+  private targetString: string = "";
   private splitTargetString: any;
   /** List of String for comparison  */
   private inputList: any[] = [];
@@ -24,11 +24,14 @@ export class StringComparisonService {
    * @param target : Target String for comparison
    * @param input : List of string to find the best that match the target
    */
-  public returnClosestStringMatch(target: String, input: any[]): Promise<String> {
-    // reset all
+  public returnClosestStringMatch(target: string, input: any[]): Promise<String> {
     
-    this.targetString = target;
-    this.splitTargetString = target.split(" ");
+    // reset all
+    this.targetString = target.replace(/[,.]/g, "");
+    console.log(this.targetString);
+    console.log('Input');
+    console.log(input);
+    this.splitTargetString =  this.targetString.split(" ");
     this.topCandidate = [];
     this.inputStat = [];
     this.inputList = input;
@@ -39,13 +42,17 @@ export class StringComparisonService {
       let score = 0;
       let splitCandidateString = candidate.split(" ");
       //Find instant match
-      if (candidate == target) {
-        return candidate;
+      if (candidate.toLowerCase() == this.targetString.toLowerCase()) {
+        return Promise.resolve(candidate);
       }
       // it doesn't match ! => perform word by word comparison, each matched word increase one score.
       else {
-        for (let i = 0; i < this.splitTargetString.length; i++) {
-          if (this.splitTargetString[i] == splitCandidateString[i])
+        for (let i = 0; i < splitCandidateString.length; i++) {
+          // break the loop if candidate word is the last
+          if(this.splitTargetString[i] == undefined || splitCandidateString[i] == undefined){
+            break;
+          }
+          if (this.splitTargetString[i].toLowerCase() == splitCandidateString[i].toLowerCase())
             score++;
         }
 
@@ -74,6 +81,7 @@ export class StringComparisonService {
         this.topCandidate.push(this.inputStat[j].originalString);
     }
     this.closestString = this.inputStat[index].originalString;
+    console.log('Closest string: '+this.closestString);
     return Promise.resolve(this.closestString);
   }
 }
