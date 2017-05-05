@@ -14,7 +14,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class OverallPage {
 
+  private selectedMode: string;
+  private userStatistics: {
+    twisterText: string,
+    attempts_taken: number,
+    correctPercentage: number
+  }[] = undefined;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.selectedMode = this.navParams.get('mode');
+    this.userStatistics = this.navParams.get('userStatistics');
+    console.log('Mode '+this.selectedMode);
+    console.log('stats');
+    console.log(this.userStatistics);
   }
 
   ionViewDidLoad() {
