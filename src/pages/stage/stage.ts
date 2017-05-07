@@ -118,8 +118,9 @@ export class StagePage {
       });
 
       this.angularFire.database.list('/' + this.selectedMode).subscribe(list => {
-        this.twisterList = list;
-
+        this.twisterList = this.getRandomTwisters(list);
+        console.log('Twisters for play');
+        console.log(this.twisterList);
         this.vocabularyService.resolveAllTwisterIPA(this.twisterList).then((twisterList) => {
           this.twisterList = twisterList;
           this.currentTwister.text = this.twisterList[this.twisterIndex].text;
@@ -254,6 +255,24 @@ export class StagePage {
     else {
       this.smartAudio.play('incorrect');
     }
+  }
+
+
+  getRandomTwisters(twisterList: any): any {
+    console.log('List for processing');
+    let randomPositions: number[] = [];
+    let positionIndex = -1;
+    let twistersForPlay: any[] = [];
+    // get a random number of twisters
+    for (let i = 0; i < configuration.number_of_twisters_per_round; i++) {
+      while (randomPositions.indexOf(positionIndex) > -1 || positionIndex == -1) {
+        positionIndex = Math.floor((Math.random() * twisterList.length) - 1);
+      }
+      console.log('Selected Position');
+      randomPositions.push(positionIndex);
+      twistersForPlay.push(twisterList[positionIndex]);
+    }
+    return twistersForPlay;
   }
 
 
