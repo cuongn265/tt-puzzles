@@ -8,7 +8,7 @@ const CORRECT_PREFIX: string = " <span style=\"color: chartreuse\">";
 const INCORRECT_PREFIX: string = "<span style=\"color: red\">";
 const SUFFIX: string = "</span>"
 
-const IPA_SLASH: string = "<span style=\"color: #96BCBF \"> \\ </span>";
+const IPA_SLASH: string = "<span style=\"color: #96BCBF \"> / </span>";
 
 @Injectable()
 export class StringFormatterService {
@@ -78,10 +78,8 @@ export class StringFormatterService {
         }
         this.formattedResult = this.formattedResult.concat(formattedWord);
         this.formattedResponse.ipaString = this.formattedResponse.ipaString.concat(formattedWordIPA);
-        //this.formattedIPAResult = this.formattedIPAResult.concat(formattedWordIPA);
         this.formattedResponse.correctPercentage = Math.round((this.numberOfCorrectWord / this.splitTargetString.length * 100) * 100) / 100;
         this.formattedResponse.wordString = this.formattedResult;
-        //this.formattedResponse.ipaString = this.formattedIPAResult;
       });
       this.formattedResponse.ipaString = this.formattedResponse.ipaString.concat(IPA_SLASH);
       resolve(this.formattedResponse);

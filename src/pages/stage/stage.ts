@@ -119,7 +119,13 @@ export class StagePage {
 
       this.angularFire.database.list('/' + this.selectedMode).subscribe(list => {
         this.twisterList = list;
-        this.currentTwister.text = this.twisterList[this.twisterIndex].text;
+
+        this.vocabularyService.resolveAllTwisterIPA(this.twisterList).then((twisterList) => {
+          this.twisterList = twisterList;
+          this.currentTwister.text = this.twisterList[this.twisterIndex].text;
+          this.currentTwister.ipa = this.twisterList[this.twisterIndex].IPA;
+          dataLoading.dismiss();
+        });
         // init the userStatistics
         for (let twister of this.twisterList) {
           this.userStatistics.push({
@@ -128,10 +134,6 @@ export class StagePage {
             correctPercentage: 0
           });
         }
-        /*Dismiss loading */
-        dataLoading.dismiss().catch((err) => {
-          console.log(err);
-        });
       });
     }
   }
@@ -168,43 +170,23 @@ export class StagePage {
       this.userAnswer = this.currentTwister.text.slice(0, numberOfCharacterToKeep);
 
       loadingSpinner.present().then(() => {
-        if (this.currentTwister.ipa == undefined) {
-          this.vocabularyService.returnIPAOfString(this.currentTwister.text).then((IPA) => {
-            this.currentTwister.ipa = IPA;
-            // show result
-            this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
-              this.formattedAnswer = formattedAnswer;
 
-              //get the highest attempt on twister
-              if (this.formattedAnswer.correctPercentage > this.userStatistics[this.twisterIndex].correctPercentage) {
-                this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
-              }
-              this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
-              this.userStatistics[this.twisterIndex].attempts_taken++;
-              this.startListening = false;
-              this.showResult = true;
-              // Play audio effect
+        // load IPA of the next twister
 
-            });
-            loadingSpinner.dismiss();
-          });
-        }
-        else {
-          // show result
-          this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
-            this.formattedAnswer = formattedAnswer;
-            //get the highest attempt on twister
-            if (this.formattedAnswer.correctPercentage > this.userStatistics[this.twisterIndex].correctPercentage) {
-              this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
-            }
+        this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
+          this.formattedAnswer = formattedAnswer;
 
-            this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
-            this.userStatistics[this.twisterIndex].attempts_taken++;
-            this.startListening = false;
-            this.showResult = true;
-            loadingSpinner.dismiss();
-          });
-        }
+          //get the highest attempt on twister
+          if (this.formattedAnswer.correctPercentage > this.userStatistics[this.twisterIndex].correctPercentage) {
+            this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+          }
+          this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
+          this.userStatistics[this.twisterIndex].attempts_taken++;
+          this.startListening = false;
+          this.showResult = true;
+          loadingSpinner.dismiss();
+        });
+
       });
     })
 
@@ -220,32 +202,16 @@ export class StagePage {
         loadingSpinner.present().then(() => {
           this.stringComparisonService.returnClosestStringMatch(this.currentTwister.text, this.speechList).then((closestString: string) => {
             this.userAnswer = closestString;
-            /* GET the ipa of sentence */
-            if (this.currentTwister.ipa == undefined) {
-              this.vocabularyService.returnIPAOfString(this.currentTwister.text).then((IPA) => {
-                this.currentTwister.ipa = IPA;
-                this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
-                  this.formattedAnswer = formattedAnswer;
-                  this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
-                  this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
-                  this.userStatistics[this.twisterIndex].attempts_taken++;
-                  this.startListening = false;
-                  this.showResult = true;
-                });
-                loadingSpinner.dismiss();
-              });
-            }
-            else {
-              this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
-                this.formattedAnswer = formattedAnswer;
-                this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
-                this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
-                this.userStatistics[this.twisterIndex].attempts_taken++;
-                this.startListening = false;
-                this.showResult = true;
-                loadingSpinner.dismiss();
-              });
-            }
+            this.stringFormatterService.returnFormattedAnswer(this.currentTwister, this.userAnswer).then((formattedAnswer) => {
+              this.formattedAnswer = formattedAnswer;
+              this.userStatistics[this.twisterIndex].correctPercentage = this.formattedAnswer.correctPercentage;
+              this.playSoundBaseOnCorrectness(this.formattedAnswer.correctPercentage);
+              this.userStatistics[this.twisterIndex].attempts_taken++;
+              this.startListening = false;
+              this.showResult = true;
+            });
+            loadingSpinner.dismiss();
+
           });
         });
       },
@@ -277,7 +243,7 @@ export class StagePage {
         this.endOfTwister = true;
       }
       this.currentTwister.text = this.twisterList[this.twisterIndex].text;
-      this.currentTwister.ipa = undefined;
+      this.currentTwister.ipa = this.twisterList[this.twisterIndex].IPA;
       this.formattedAnswer.correctPercentage = 0;
     }
   }
