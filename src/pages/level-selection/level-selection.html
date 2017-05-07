@@ -1,4 +1,11 @@
-<!--<ion-content padding style="background-image: url('http://materialdesignblog.com/wp-content/uploads/2016/06/image3.jpg')">-->
+<!--<ion-header no-border>
+  <ion-toolbar color="light">
+    <button ion-button menuToggle left>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Header</ion-title>
+  </ion-toolbar>
+</ion-header>-->
 <ion-content>
   <ion-grid>
 
@@ -6,42 +13,25 @@
       <ion-col col-12 [navPush]="stagePage" 
         [navParams]="{mode: 'whirlwind'}">
         <div class="level">Whirlwind</div>
-        <button ion-button large class="btn-lvl-selection lvl-easy">18 item</button>
-        <!--<button ion-button outline large class="btn-lvl-selection lvl-easy" 
-        [navPush]="stagePage" 
-        [navParams]="{mode: 'whirlwind'}">Whirlwind</button>-->
+        <button ion-button outline color="light" class="btn-lvl-selection lvl-easy">18 items</button>
       </ion-col>
     </ion-row>
     <ion-row class="body">
       <ion-col col-12 [navPush]="stagePage" 
         [navParams]="{mode: 'cyclone'}">
         <div class="level">Cyclone</div>
-        <button ion-button large class="btn-lvl-selection lvl-easy">18 item</button>
-        <!--<button ion-button outline large class="btn-lvl-selection lvl-normal" 
-        [navPush]="stagePage" 
-        [navParams]="{mode: 'cyclone'}">Cyclone</button>-->
+        <button ion-button outline color="light" class="btn-lvl-selection lvl-normal">18 items</button>
       </ion-col>
     </ion-row>
     <ion-row class="footer">
       <ion-col col-12 [navPush]="stagePage" 
         [navParams]="{mode: 'tornado'}">
         <div class="level">Tornado</div>
-        <button ion-button large class="btn-lvl-selection lvl-easy">17 item</button>
-        <!--<button ion-button outline large class="btn-lvl-selection lvl-hard" 
-        [navPush]="stagePage" 
-        [navParams]="{mode: 'tornado'}">Tornado</button>-->
+        <button ion-button outline color="light" class="btn-lvl-selection lvl-hard">17 items</button>
       </ion-col>
     </ion-row>
-    <ion-fab bottom left home>
-      <button ion-fab (click)="goHome()" ><ion-icon name="home"></ion-icon></button>
-    </ion-fab>
-
-    <!--<ion-row>
-      <ion-col col-12 text-left>
-        <button ion-button icon-only outline class="btn-home" (click)="goHome()">
-          <ion-icon name="home"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>-->
+    <!--<ion-fab bottom left home>
+      <button ion-fab (click)="goHome()" color="primary"><ion-icon name="home"></ion-icon></button>
+    </ion-fab>-->
   </ion-grid>
 </ion-content>
