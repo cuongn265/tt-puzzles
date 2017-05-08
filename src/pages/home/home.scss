@@ -15,12 +15,56 @@ page-home {
   }
   .header {
     flex: 2;
+
+    .welcome{
+/*      width: 432px;
+      height: 60px;*/
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: 1px;
+      text-align: center;
+      color: #1d1d26;
+      margin-bottom: 60px;
+    }
+
+    .welcome{
+      letter-spacing: normal;
+    }
   }
   .body {
     flex: 2;
+    .playGame{
+      color: #ffffff;
+      background-color: #50d2c2;
+      border-radius: 0;
+      width: 120px;
+      height: 40px;
+    }
+
+    .oval {
+      width: 120px;
+      height: 120px;
+      background-color: #50d2c2;
+      border: solid 2px #50d2c2;
+      border: none;
+    }
+
+    .layer {
+      font-size: 50px;
+      font-weight: 300;
+      color: #ffffff;
+      text-transform: none;
+    }
   }
   .footer {
     flex: 2;
+
+    .btn-circle{
+      color: #ffffff;
+      background-color: #50d2c2;
+      box-shadow: none;
+      border: none;
+    }
 
     ion-col {
       display: block;

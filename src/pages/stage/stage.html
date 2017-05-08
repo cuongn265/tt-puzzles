@@ -17,6 +17,7 @@
                 </ion-row>
                 <!-- -->
                 <ion-row>
+                  <p [hidden]="currentTwister.ipa == undefined || showResult">/ {{currentTwister.ipa}} /</p>
                   <div [innerHTML]="formattedAnswer.ipaString | safeHTML" *ngIf="showResult"></div>
                 </ion-row>
                 <ion-row justify-content-center>
