@@ -12,7 +12,7 @@
         </ion-row>
         <ion-row>
           <ion-col text-center class="body">
-            <p>Rank: {{userRate}}</p>
+            <p [ngStyle]= "{'color': userRate.color}">{{userRate.text}}</p>
             <p>Twister Conquered: {{conqueredTwisters}}</p>
             <p>Average Accuracy: {{averageUserCorrectionPercentage}}%</p>
           </ion-col>
