@@ -4,8 +4,8 @@ import { Injectable } from "@angular/core";
  * This service is responsible for String Formatting
  */
 
-const CORRECT_PREFIX: String = " <span style=\"color: chartreuse\">";
-const INCORRECT_PREFIX: String = "<span style=\"color: red\">";
+const CORRECT_PREFIX: String = " <span style=\"color: #50D2C2\">";
+const INCORRECT_PREFIX: String = "<span style=\"color: #FF3366\">";
 const SUFFIX: String = "</span>"
 
 @Injectable()
