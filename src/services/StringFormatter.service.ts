@@ -7,6 +7,7 @@ import { Injectable } from "@angular/core";
 const CORRECT_PREFIX: String = " <span style=\"color: #50D2C2\">";
 const INCORRECT_PREFIX: String = "<span style=\"color: #FF3366\">";
 const SUFFIX: String = "</span>"
+const IPA_SLASH: string = "<span style=\"color: #96BCBF \"> / </span>";
 
 @Injectable()
 export class StringFormatterService {
@@ -59,6 +60,9 @@ export class StringFormatterService {
     this.detectErrorInTargetFromInput(input);
 
     return new Promise((resolve, reject) => {
+      // add slash to the beginning of string
+      this.formattedResponse.ipaString = this.formattedResponse.ipaString.concat(IPA_SLASH);
+
       this.wordsArrayStat.map((word) => {
         let formattedWord: string = "";
         let formattedWordIPA: string = "";
@@ -72,12 +76,12 @@ export class StringFormatterService {
           formattedWordIPA = INCORRECT_PREFIX + word.ipa + " " + SUFFIX;
         }
         this.formattedResult = this.formattedResult.concat(formattedWord);
-        this.formattedIPAResult = this.formattedIPAResult.concat(formattedWordIPA);
+        this.formattedResponse.ipaString = this.formattedResponse.ipaString.concat(formattedWordIPA);
         this.formattedResponse.correctPercentage = Math.round((this.numberOfCorrectWord / this.splitTargetString.length * 100) * 100) / 100;
         this.formattedResponse.wordString = this.formattedResult;
-        this.formattedResponse.ipaString = this.formattedIPAResult;
-        resolve(this.formattedResponse);
       });
+      this.formattedResponse.ipaString = this.formattedResponse.ipaString.concat(IPA_SLASH);
+      resolve(this.formattedResponse);
     })
   }
 

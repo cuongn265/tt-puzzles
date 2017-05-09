@@ -33,6 +33,11 @@ export class VocabularyService {
     ipa: string
   }[];
 
+  private twisterList: {
+    text: string,
+    IPA: string
+  }[];
+
   constructor(private http: Http, private platform: Platform) {
     this.app_id = configuration.oxfordAPI.app_id;
     this.app_key = configuration.oxfordAPI.app_key;
@@ -47,6 +52,24 @@ export class VocabularyService {
 
   }
 
+
+  public resolveAllTwisterIPA(twisterList: any): Promise<any> {
+    this.twisterList = twisterList;
+    let findAllIPAofTwister = this.twisterList.map((twister) => {
+      return new Promise((resolve, reject) => {
+        this.getIPAOfStringFromBluemixWatson(twister.text).then((IPA) => {
+          twister.IPA = IPA;
+          resolve();
+        }).catch((err) => {
+          reject(err);
+        })
+      })
+    });
+
+    return Promise.all(findAllIPAofTwister).then(() => {
+      return Promise.resolve(this.twisterList);
+    });
+  }
 
   public returnIPAOfString(inputString: string): Promise<any> {
     this.inputString = inputString.replace(/[,.]/g, "");
@@ -78,6 +101,20 @@ export class VocabularyService {
         resolve(ipaString);
       })
     })
+  }
+
+  private getIPAOfStringFromBluemixWatson(inputString: string): Promise<any> {
+    let input: string = inputString.replace(/[,.]/g, "");
+    input = input.replace(/ /g, "+");
+
+    return new Promise((resolve, reject) => {
+      this.getWordIPAFromBluemix(input).then((ipa) => {
+        resolve(ipa);
+      }).catch((err) => {
+        console.error(err);
+        reject();
+      });
+    });
   }
 
   private getWordIPA(word: String): Promise<any> {
@@ -148,14 +185,16 @@ export class VocabularyService {
     if (this.platform.is('core')) {
       return this.http.get('bluemixapi/' + this.bluemixPartialBaseRequestURL_prefix + word + this.bluemixBaseRequestURL_suffix, options).toPromise().then((response) => {
         let responseJson = response.json();
-        let wordIPA = responseJson.pronunciation;
+        let wordIPA:string = responseJson.pronunciation;
+        wordIPA = wordIPA.replace(/[.]/g, "");
         return Promise.resolve(wordIPA);
       });
     }
     else {
       return this.http.get(this.bluemixBaseRequestURL_prefix + word + this.bluemixBaseRequestURL_suffix, options).toPromise().then((response) => {
         let responseJson = response.json();
-        let wordIPA = responseJson.pronunciation;
+        let wordIPA: string = responseJson.pronunciation;
+        wordIPA = wordIPA.replace(/[.]/g, "");
         return Promise.resolve(wordIPA);
       });
     }

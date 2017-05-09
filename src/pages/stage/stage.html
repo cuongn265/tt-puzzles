@@ -15,7 +15,6 @@
                 <div [innerHTML]="formattedAnswer.wordString | safeHTML" *ngIf="showResult"></div>
               </ion-col>
             </ion-row>
-            <!-- -->
             <ion-row justify-content-center>
               <ion-col >
                 <button class="btn-circle btn-listen" ion-button icon-only outline round mode="md" color="primary" (click)="playCurrentTwister()">
@@ -25,8 +24,10 @@
             </ion-row>
             <ion-row class="result">
               <ion-col>
+                <p [hidden]="currentTwister.ipa == undefined || showResult">/ {{currentTwister.ipa}} /</p>
                 <div [innerHTML]="formattedAnswer.ipaString | safeHTML" *ngIf="showResult"></div>
               </ion-col>
+
             </ion-row>
             <!--<ion-row>
               <ion-col>
