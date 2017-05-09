@@ -4,42 +4,59 @@ page-level-selection {
       display: flex;
       flex-direction: column;
     }
+    .grid {
+      padding: 0px;
+    }
     ion-grid {
-      padding: 0;
+      padding: 0px;
       height: 100%;
-      .header {
-        flex: 1;
-        margin-top: 10px;
-      }
-      .lvl-selection-group {
-        flex: 3;
-        .btn-lvl-selection {
-          width: 80%;
-        }
-        .lvl-easy{
-          color: #00BCD4;
-          border-color: #00BCD4;
-        }
-        .lvl-normal{
-          color: #FB8C00;
-          border-color: #FB8C00;
-        }
-        .lvl-hard{
+      ion-fab {
+        button {
           color: #F44336;
-          border-color: #F44336;
         }
-      }
-      .btn-home {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: 1px solid;
-        color: white;
-        border-color: white;
       }
     }
   }
   ion-row {
     text-align: center;
+    flex: 2;
+    .level {
+      font-size: 30px;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: 1px;
+      text-align: center;
+      color: color($colors, light);
+      margin-bottom: 0.66em;
+    }
+    .lvl-easy,
+    .lvl-normal,
+    .lvl-hard {
+      font-size: 12px;
+      line-height: 1.0;
+      letter-spacing: 2px;
+      text-align: center;
+      color: #ffffff;
+      height: 3.6em;
+    }
+    ion-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .row {
+    border-bottom: #fafafa 0px solid;
+    background-repeat: round;
+  }
+  .header {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("http://all4desktop.com/data_images/original/4235754-wallpaper-full-hd.jpg") round;
+  }
+  .body {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("http://rekordcenturion.co.za/wp-content/uploads/sites/87/2016/12/lightning-storm-with-rain-wallpaper-111.jpg") round;
+  }
+  .footer {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("https://www.walldevil.com/wallpapers/a30/abstract-wallpaper-whirlwind-background-desktop-backgrounds.jpg") round;
   }
 }
