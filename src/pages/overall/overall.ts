@@ -18,7 +18,13 @@ export class OverallPage {
   private averageUserCorrectionPercentage: number = 0;
   private conqueredTwisters: number = 0;
 
-  private userRate: string;
+  private userRate: {
+    text: string,
+    color: string
+  } = {
+    text: "",
+    color: ""
+  };
   private selectedMode: string;
   private userStatistics: {
     twisterText: string,
@@ -33,7 +39,7 @@ export class OverallPage {
     /* Update stats and score stuffs*/
     this.averageUserCorrectionPercentage = this.calculateOverallScoreBand(this.userStatistics);
     this.conqueredTwisters = this.returnConqueredTwisters(this.userStatistics);
-    this.userRate = this.returnRateOnOverallScoreBand(this.averageUserCorrectionPercentage);
+    this.userRate = this.getRateOnOverallScoreBand(this.averageUserCorrectionPercentage);
   }
 
   ionViewDidLoad() {
@@ -64,14 +70,28 @@ export class OverallPage {
     return averageScore;
   }
 
-  private returnRateOnOverallScoreBand(averageScore: number): string {
+  private getRateOnOverallScoreBand(averageScore: number): {
+    text: string,
+    color: string
+  } {
+    let rate: {
+      text: string,
+      color: string
+    } = {
+      text: "",
+      color: ""
+    }
     let adjustedScore = Math.round(averageScore / 10) * 10;
     console.log('Adjusted Score: ' + adjustedScore);
     for (let scoreBand of configuration.pronunciation_skill_bands) {
-      if (adjustedScore === scoreBand.score)
-        return scoreBand.rate;
+      if (adjustedScore === scoreBand.score) {
+        rate.text = scoreBand.rate;
+        rate.color = scoreBand.color
+        return rate;
+      }
     }
   }
+
 
   private capitalizedTwisterModeTitle(mode: string): string {
     return mode.charAt(0).toUpperCase() + mode.slice(1);

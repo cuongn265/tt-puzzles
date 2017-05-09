@@ -20,47 +20,58 @@ export const configuration = {
   "pronunciation_skill_bands": [
     {
       "score": 0,
-      "rate": "Troll"
+      "rate": "Troll",
+      "color": "#FF2040"
     },
     {
       "score": 10,
-      "rate": "Non-user"
+      "rate": "Non-user",
+      "color": "#FF5187"
     },
     {
       "score": 20,
-      "rate": "Intermittent"
+      "rate": "Intermittent",
+      "color": "#FF5115"
     },
     {
       "score": 30,
-      "rate": "Extremely limited"
+      "rate": "Extremely limited",
+      "color": "#FFB715"
     },
     {
       "score": 40,
-      "rate": "Limited"
+      "rate": "Limited",
+      "color": "#EFF911"
     },
     {
       "score": 50,
-      "rate": "Modest"
+      "rate": "Modest",
+      "color": "#C4F911"
     },
     {
       "score": 60,
-      "rate": "Competent"
+      "rate": "Competent",
+      "color": "#AFDD00"
     },
     {
       "score": 70,
-      "rate": "Good"
+      "rate": "Good",
+      "color": "#28DD00"
     },
     {
       "score": 80,
-      "rate": "Very good"
+      "rate": "Very good",
+      "color": "#2858A5"
     },
     {
       "score": 90,
-      "rate": "Excellent"
+      "rate": "Excellent",
+      "color": "#26ADA6"
     },
     {
       "score": 100,
-      "rate": "Expert"
+      "rate": "Expert",
+      "color": "#6308A6"
     }
 
   ]
