@@ -8,26 +8,31 @@
 </ion-header>-->
 <ion-content>
   <ion-grid>
-
     <ion-row class="header">
       <ion-col col-12 [navPush]="stagePage" 
         [navParams]="{mode: 'whirlwind'}">
         <div class="level">Whirlwind</div>
-        <button ion-button outline color="light" class="btn-lvl-selection lvl-easy">18 items</button>
+        <!--
+        <button ion-button outline color="light" class="btn-lvl-selection lvl-easy">{{numberOfTwisters.whirlwind}} items</button>
+        -->
       </ion-col>
     </ion-row>
     <ion-row class="body">
       <ion-col col-12 [navPush]="stagePage" 
         [navParams]="{mode: 'cyclone'}">
         <div class="level">Cyclone</div>
-        <button ion-button outline color="light" class="btn-lvl-selection lvl-normal">18 items</button>
+        <!--
+        <button ion-button outline color="light" class="btn-lvl-selection lvl-normal">{{numberOfTwisters.cyclone}} items</button>
+        -->
       </ion-col>
     </ion-row>
     <ion-row class="footer">
       <ion-col col-12 [navPush]="stagePage" 
         [navParams]="{mode: 'tornado'}">
         <div class="level">Tornado</div>
-        <button ion-button outline color="light" class="btn-lvl-selection lvl-hard">17 items</button>
+        <!--
+        <button ion-button outline color="light" class="btn-lvl-selection lvl-hard">{{numberOfTwisters.tornado}} items</button>
+        -->
       </ion-col>
     </ion-row>
     <!--<ion-fab bottom left home>

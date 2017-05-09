@@ -39,6 +39,7 @@ export class StagePage {
     IPA: string
   }[];
 
+
   //statisticList: Store user statistic
   private userStatistics: {
     twisterText: string,
@@ -76,6 +77,8 @@ export class StagePage {
   private endOfTwister: boolean = false;
   private startListening: boolean = false;
 
+  private twisterTouched: boolean = false;
+  private ignoredSkipping: boolean = false;
 
   /**
    * showResult: show the format result of twister text and IPA result
@@ -101,6 +104,8 @@ export class StagePage {
       });
       alert.present();
     });
+
+
     /**
      * -------------------------------------------------------------------
      */
@@ -111,7 +116,7 @@ export class StagePage {
       /* Data loading spinner */
       let dataLoading = loadingCtrl.create({
         content: 'Preparing twisters, please wait...',
-        dismissOnPageChange: true
+        dismissOnPageChange: false
       });
       dataLoading.present().catch((err) => {
         console.log(err);
@@ -119,8 +124,6 @@ export class StagePage {
 
       this.angularFire.database.list('/' + this.selectedMode).subscribe(list => {
         this.twisterList = this.getRandomTwisters(list);
-        console.log('Twisters for play');
-        console.log(this.twisterList);
         this.vocabularyService.resolveAllTwisterIPA(this.twisterList).then((twisterList) => {
           this.twisterList = twisterList;
           this.currentTwister.text = this.twisterList[this.twisterIndex].text;
@@ -165,6 +168,7 @@ export class StagePage {
     }).catch(err => {
       // Perform dummy processing from here
       this.startListening = true;
+      this.twisterTouched = true;
       let numberOfCharacterToKeep = Math.floor((Math.random() * this.currentTwister.text.length / 2) + this.currentTwister.text.length / 3);
 
       // simulate userAnswer
@@ -235,17 +239,71 @@ export class StagePage {
     }
     else {
       /**Jump to the next twister */
-      this.twisterIndex++;
-      this.userAnswer = " ";
-      this.showResult = false;
+      if (this.twisterTouched == false && this.ignoredSkipping == false) {
+        /**
+     * Create skipping twister confirmation alert
+     */
 
-      // check if the next one is the last twister
-      if (this.twisterIndex == this.twisterList.length - 1) {
-        this.endOfTwister = true;
+        let twisterSkippingAlert = this.alertCtrl.create({
+          title: "Skipping Twister",
+          message: "No attempts have been made on this one so far. You will have no score for this twister, continue ?"
+        });
+
+        twisterSkippingAlert.addInput({
+          type: 'checkbox',
+          label: 'Don\'t show this message again ',
+          value: 'true',
+          checked: false
+        });
+        twisterSkippingAlert.addButton({
+          text: 'Okay',
+          handler: data => {
+            if (data[0] == 'true') {
+              console.log('okay, ignored !');
+              this.ignoredSkipping = true;
+            }
+            else {
+              this.ignoredSkipping = false;
+            }
+
+            // Okay, agree to skip
+            this.twisterIndex++;
+            this.userAnswer = " ";
+            this.showResult = false;
+
+            // check if the next one is the last twister
+            if (this.twisterIndex == this.twisterList.length - 1) {
+              this.endOfTwister = true;
+            }
+            this.twisterTouched = false;
+            this.currentTwister.text = this.twisterList[this.twisterIndex].text;
+            this.currentTwister.ipa = this.twisterList[this.twisterIndex].IPA;
+            this.formattedAnswer.correctPercentage = 0;
+          }
+        });
+        twisterSkippingAlert.addButton('Cancel');
+
+
+        twisterSkippingAlert.present().catch((err) => {
+          console.log(err);
+        });
       }
-      this.currentTwister.text = this.twisterList[this.twisterIndex].text;
-      this.currentTwister.ipa = this.twisterList[this.twisterIndex].IPA;
-      this.formattedAnswer.correctPercentage = 0;
+      else {
+        this.twisterIndex++;
+        this.userAnswer = " ";
+        this.showResult = false;
+
+        // check if the next one is the last twister
+        if (this.twisterIndex == this.twisterList.length - 1) {
+          this.endOfTwister = true;
+        }
+        this.twisterTouched = false;
+        this.currentTwister.text = this.twisterList[this.twisterIndex].text;
+        this.currentTwister.ipa = this.twisterList[this.twisterIndex].IPA;
+        this.formattedAnswer.correctPercentage = 0;
+      }
+
+
     }
   }
 
@@ -259,7 +317,6 @@ export class StagePage {
 
 
   getRandomTwisters(twisterList: any): any {
-    console.log('List for processing');
     let randomPositions: number[] = [];
     let positionIndex = -1;
     let twistersForPlay: any[] = [];
@@ -268,7 +325,6 @@ export class StagePage {
       while (randomPositions.indexOf(positionIndex) > -1 || positionIndex == -1) {
         positionIndex = Math.floor((Math.random() * twisterList.length) - 1);
       }
-      console.log('Selected Position');
       randomPositions.push(positionIndex);
       twistersForPlay.push(twisterList[positionIndex]);
     }
@@ -278,7 +334,6 @@ export class StagePage {
 
   // generate level depend on selected level
   ionViewDidLoad() {
-    console.log(this.selectedMode);
   }
 
 }
