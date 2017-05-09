@@ -204,6 +204,7 @@ export class StagePage {
       .subscribe(
       (matches: Array<string>) => {
         this.speechList = matches;
+        this.twisterTouched = true;
         loadingSpinner.present().then(() => {
           this.stringComparisonService.returnClosestStringMatch(this.currentTwister.text, this.speechList).then((closestString: string) => {
             this.userAnswer = closestString;
