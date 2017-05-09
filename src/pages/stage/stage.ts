@@ -81,7 +81,7 @@ export class StagePage {
    * showResult: show the format result of twister text and IPA result
    */
   private showResult: boolean = false;
-
+  private totalTwisters: number = configuration.number_of_twisters_per_round;
 
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public navParams: NavParams, private angularFire: AngularFire,
