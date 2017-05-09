@@ -111,7 +111,7 @@ export class StagePage {
       /* Data loading spinner */
       let dataLoading = loadingCtrl.create({
         content: 'Preparing twisters, please wait...',
-        dismissOnPageChange: true
+        dismissOnPageChange: false
       });
       dataLoading.present().catch((err) => {
         console.log(err);

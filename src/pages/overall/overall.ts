@@ -35,8 +35,6 @@ export class OverallPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.selectedMode = this.capitalizedTwisterModeTitle(this.navParams.get('mode'));
     this.userStatistics = this.navParams.get('userStatistics');
-    console.log('User stats');
-    console.log(this.userStatistics);
     /* Update stats and score stuffs*/
     this.averageUserCorrectionPercentage = this.calculateOverallScoreBand(this.userStatistics);
     this.conqueredTwisters = this.returnConqueredTwisters(this.userStatistics);
@@ -88,7 +86,8 @@ export class OverallPage {
     for (let scoreBand of configuration.pronunciation_skill_bands) {
       if (adjustedScore === scoreBand.score) {
         rate.text = scoreBand.rate;
-        rate.color = scoreBand.color
+        //rate.color = scoreBand.color;
+        rate.color = "#ffffff";
         return rate;
       }
     }
@@ -100,9 +99,6 @@ export class OverallPage {
   }
 
   private next() {
-    // this.navCtrl.pop().then(()=> {
-    //   this.navCtrl.pop();
-    // });
     this.navCtrl.setRoot(LevelSelectionPage);
   }
 
@@ -110,5 +106,14 @@ export class OverallPage {
     if (correctPercentage == 100)
       return "#50D2C2";
     return "#f53d3d";
+  }
+
+  private resolveBackground(mode: string): string {
+    console.log(mode);
+    for (let level of configuration.level_background) {
+      if (mode == level.name) {
+        return level.img_path;
+      }
+    }
   }
 }

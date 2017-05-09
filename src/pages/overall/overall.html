@@ -2,15 +2,9 @@
   <ion-grid no-padding>
     <ion-row class="content">
       <ion-grid no-padding>
-        <ion-row class="header">
+        <ion-row class="header" [ngStyle]="{'background': 'linear-gradient(to bottom, rgba(0, 0, 0, 0.49), rgba(31, 29, 29, 0.39)),       url('+ resolveBackground(selectedMode) + ') round'}">
           <ion-col text-center>
-            <img src="http://all4desktop.com/data_images/original/4235754-wallpaper-full-hd.jpg" alt="level">
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="body">
-          <ion-col text-center>
-            <p [ngStyle]="{'color': userRate.color}">{{userRate.text}}</p>
+            <div class="rate-txt" [ngStyle]="{'color': userRate.color}">{{userRate.text}}</div>
           </ion-col>
         </ion-row>
         <ion-row class="footer">
@@ -34,6 +28,7 @@
     </ion-row>
     <ion-row class="actions">
       <ion-col col-12>
+
         <ion-scroll scrollY="true" style="height: 100%;" class="scroll-content">
           <div *ngFor="let stat of userStatistics">
             <ion-grid>
@@ -62,7 +57,7 @@
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <button ion-button full color="primary" class="btn-playagain" (click)="next()" >
+        <button ion-button full color="primary" class="btn-playagain" (click)="next()">
           Next
         </button>
       </ion-col>

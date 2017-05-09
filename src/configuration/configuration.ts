@@ -17,6 +17,24 @@ export const configuration = {
     "end_game": "assets/audio/end_game.mp3"
   },
   "number_of_twisters_per_round": 10,
+  "level_background": 
+    [
+      {
+        "name": "Whirlwind",
+        "img_path": "./assets/img/whirlwind_bg.jpg"
+      },
+       {
+        "name": "Cyclone",
+        "img_path": "./assets/img/cyclone_bg.jpg"
+      },
+       {
+        "name": "Tornado",
+        "img_path": "./assets/img/tornado_bg.jpg"
+      }
+    ]
+  ,
+  
+  
   "pronunciation_skill_bands": [
     {
       "score": 0,
