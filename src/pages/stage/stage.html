@@ -1,56 +1,60 @@
-<ion-content style="background-image: url('http://materialdesignblog.com/wp-content/uploads/2016/06/image3.jpg')">
-  <ion-grid>
+<ion-content style="background-color: white">
+  <ion-grid no-padding>
     <ion-row class="content">
-      <ion-card>
-        <ion-card-content>
+      <ion-grid>
+        <ion-row class="header">
+          <ion-col>
+            <p text-center>{{twisterIndex+1}} of {{totalTwisters}}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row class="body">
           <ion-grid>
-            <ion-row class="header">
+            <ion-row class="challenge">
               <ion-col>
-                <h1 text-center>Twister #{{twisterIndex+1}}</h1>
+                <p [hidden]="showResult">{{currentTwister.text}}</p>
+                <div [innerHTML]="formattedAnswer.wordString | safeHTML" *ngIf="showResult"></div>
               </ion-col>
             </ion-row>
-            <ion-row class="body">
-              <ion-grid>
-                <ion-row class="challenge">
-                  <p [hidden]="showResult">{{currentTwister.text}}</p>
-                  <div [innerHTML]="formattedAnswer.wordString | safeHTML" *ngIf="showResult"></div>
-                </ion-row>
-                <!-- -->
-                <ion-row>
-                  <p [hidden]="currentTwister.ipa == undefined || showResult">/ {{currentTwister.ipa}} /</p>
-                  <div [innerHTML]="formattedAnswer.ipaString | safeHTML" *ngIf="showResult"></div>
-                </ion-row>
-                <ion-row justify-content-center>
-                  <button class="btn-circle" ion-button icon-only outline round mode="md" color="light" (click)="playCurrentTwister()">
-                    <ion-icon name="volume-up"></ion-icon>
-                  </button>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <p>Accuracy: {{formattedAnswer.correctPercentage}}</p>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+            <ion-row justify-content-center>
+              <ion-col >
+                <button class="btn-circle btn-listen" ion-button icon-only outline round mode="md" color="primary" (click)="playCurrentTwister()">
+                  <ion-icon name="volume-up"></ion-icon>
+                </button>
+              </ion-col>
             </ion-row>
+            <ion-row class="result">
+              <ion-col>
+                <p [hidden]="currentTwister.ipa == undefined || showResult">/ {{currentTwister.ipa}} /</p>
+                <div [innerHTML]="formattedAnswer.ipaString | safeHTML" *ngIf="showResult"></div>
+              </ion-col>
+
+            </ion-row>
+            <!--<ion-row>
+              <ion-col>
+                <p>Accuracy: {{formattedAnswer.correctPercentage}}</p>
+              </ion-col>
+            </ion-row>-->
           </ion-grid>
-        </ion-card-content>
-      </ion-card>
+        </ion-row>
+      </ion-grid>
     </ion-row>
     <ion-row class="actions">
-      <ion-col col-4 align-self-end text-left class="left-options">
-      </ion-col>
-
-      <ion-col col-4 align-self-end text-center class="center-options">
-        <button class="btn-circle" ion-button icon-only round="true" mode="md" color="transparent" (click)="tryTwister()">
-          <ion-icon name="mic"></ion-icon>
-        </button>
-      </ion-col>
-
-      <ion-col col-4 align-self-end text-right class="right-options">
-        <button class="btn-circle" ion-button icon-only round="true" mode="md" color="transparent" (click)="goToNextTwister()">
-          <ion-icon name="arrow-round-forward"></ion-icon>
-        </button>
-      </ion-col>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <button ion-button full color="secondary" (click)="tryTwister()">
+              Record
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <button ion-button full color="primary" (click)="goToNextTwister()">
+              Next
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-row>
   </ion-grid>
 </ion-content>

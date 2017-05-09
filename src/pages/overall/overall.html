@@ -1,47 +1,181 @@
-<ion-content style="background-image: url('http://materialdesignblog.com/wp-content/uploads/2016/06/image3.jpg')">
-  <ion-grid>
+<ion-content>
+  <ion-grid no-padding>
     <ion-row class="content">
-      <!--<ion-card>
-        <ion-card-content>-->
-      <ion-grid>
-        <ion-row>
-          <ion-col text-center class="header">
-            <p>Overall Score</p>
-            <p>{{selectedMode}} Realm</p>
+      <ion-grid no-padding>
+        <ion-row class="header">
+          <ion-col text-center>
+            <img src="http://all4desktop.com/data_images/original/4235754-wallpaper-full-hd.jpg" alt="level">
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col text-center class="body">
-            <p>Rank: {{userRate}}</p>
-            <p>Twister Conquered: {{conqueredTwisters}}</p>
-            <p>Average Accuracy: {{averageUserCorrectionPercentage}}%</p>
+        <ion-row class="body">
+          <ion-col text-center>
+            <p>{{userRate}}</p>
+            <!--<p>Rank: {{userRate}}</p>-->
+            <!--<p>Twister Conquered: {{conqueredTwisters}}</p>-->
+            <!--<p>Average Accuracy: {{averageUserCorrectionPercentage}}%</p>-->
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col text-center class="footer">
-
+        <ion-row class="footer">
+          <ion-col col-4 class="pass">
+            <!--passed twisters-->
+            <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+            <p>{{conqueredTwisters}}</p>
+          </ion-col>
+          <ion-col col-4 class="fail">
+            <!--summary accuracy-->
+            <ion-icon name="ios-close-circle-outline"></ion-icon>
+            <p>{{conqueredTwisters}}</p>
+          </ion-col>
+          <ion-col col-4 class="accuracy">
+            <!--summary accuracy-->
+            <ion-icon name="ios-speedometer-outline"></ion-icon>
+            <p>{{averageUserCorrectionPercentage}}</p>
           </ion-col>
         </ion-row>
       </ion-grid>
-      <!--</ion-card-content>
-      </ion-card>-->
     </ion-row>
     <ion-row class="actions">
-      <ion-col col-4 align-self-end text-left class="left-options">
-        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent" (click)="goToLevelSelection()">
-          <ion-icon name="home"></ion-icon>
-        </button>
+      <ion-col col-12>
+        <ion-scroll scrollY="true" style="height: 100%;" class="scroll-content">
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-1 class="col-square">
+                  <div class="square"></div>
+                </ion-col>
+                <ion-col col-11 class="twister-sentence">
+                  <p>Meet with Janet</p>
+                  <div class="info">
+                    <div class="accuracy-info">
+                      <ion-icon name="ios-speedometer-outline"></ion-icon>
+                      <label>70%</label>
+                    </div>
+                    <div class="attemps-info">
+                      <ion-icon name="ios-clock-outline"></ion-icon>
+                      <label>10 times</label>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-1 class="col-square">
+                  <div class="square"></div>
+                </ion-col>
+                <ion-col col-11 class="twister-sentence">
+                  <p>Go to Tokyo</p>
+                  <div class="info">
+                    <div class="accuracy-info">
+                      <ion-icon name="ios-speedometer-outline"></ion-icon>
+                      <label>89%</label>
+                    </div>
+                    <div class="attemps-info">
+                      <ion-icon name="ios-clock-outline"></ion-icon>
+                      <label>5 times</label>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-1 class="col-square">
+                  <div class="square"></div>
+                </ion-col>
+                <ion-col col-11 class="twister-sentence">
+                  <p>Kill Romeo</p>
+                  <div class="info">
+                    <div class="accuracy-info">
+                      <ion-icon name="ios-speedometer-outline"></ion-icon>
+                      <label>90%</label>
+                    </div>
+                    <div class="attemps-info">
+                      <ion-icon name="ios-clock-outline"></ion-icon>
+                      <label>3 times</label>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-1 class="col-square">
+                  <div class="square"></div>
+                </ion-col>
+                <ion-col col-11 class="twister-sentence">
+                  <p>Meet with Janet</p>
+                  <div class="info">
+                    <div class="accuracy-info">
+                      <ion-icon name="ios-speedometer-outline"></ion-icon>
+                      <label>70%</label>
+                    </div>
+                    <div class="attemps-info">
+                      <ion-icon name="ios-clock-outline"></ion-icon>
+                      <label>10 times</label>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-1 class="col-square">
+                  <div class="square"></div>
+                </ion-col>
+                <ion-col col-11 class="twister-sentence">
+                  <p>Go to Tokyo</p>
+                  <div class="info">
+                    <div class="accuracy-info">
+                      <ion-icon name="ios-speedometer-outline"></ion-icon>
+                      <label>89%</label>
+                    </div>
+                    <div class="attemps-info">
+                      <ion-icon name="ios-clock-outline"></ion-icon>
+                      <label>5 times</label>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-1 class="col-square">
+                  <div class="square"></div>
+                </ion-col>
+                <ion-col col-11 class="twister-sentence">
+                  <p>Kill Romeo</p>
+                  <div class="info">
+                    <div class="accuracy-info">
+                      <ion-icon name="ios-speedometer-outline"></ion-icon>
+                      <label>90%</label>
+                    </div>
+                    <div class="attemps-info">
+                      <ion-icon name="ios-clock-outline"></ion-icon>
+                      <label>3 times</label>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-scroll>
       </ion-col>
-
-      <ion-col col-4 align-self-end text-center class="center-options">
-        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent" (click)="replayLevel()">
-          <ion-icon name="refresh"></ion-icon>
-        </button>
-      </ion-col>
-
-      <ion-col col-4 align-self-end text-right class="right-options">
-        <button class="btn-circle" ion-button icon-only round mode="md" color="transparent" (click)="goToResultInDetail()">
-          <ion-icon name="list"></ion-icon>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button full color="primary" class="btn-playagain">
+          Play again
         </button>
       </ion-col>
     </ion-row>
