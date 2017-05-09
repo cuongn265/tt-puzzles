@@ -10,7 +10,7 @@
 
         <ion-row class="body">
           <ion-col text-center>
-            <p [ngStyle]= "{'color': userRate.color}">{{userRate.text}}</p>
+            <p [ngStyle]="{'color': userRate.color}">{{userRate.text}}</p>
           </ion-col>
         </ion-row>
         <ion-row class="footer">
@@ -22,7 +22,7 @@
           <ion-col col-4 class="fail">
             <!--summary accuracy-->
             <ion-icon name="ios-close-circle-outline"></ion-icon>
-            <p>{{conqueredTwisters}}</p>
+            <p>{{failedTwisters}}</p>
           </ion-col>
           <ion-col col-4 class="accuracy">
             <!--summary accuracy-->
@@ -35,132 +35,22 @@
     <ion-row class="actions">
       <ion-col col-12>
         <ion-scroll scrollY="true" style="height: 100%;" class="scroll-content">
-          <div>
+          <div *ngFor="let stat of userStatistics">
             <ion-grid>
               <ion-row>
                 <ion-col col-1 class="col-square">
-                  <div class="square"></div>
+                  <div class="square" [ngStyle]="{'background-color': resolveColor(stat.correctPercentage) }"></div>
                 </ion-col>
                 <ion-col col-11 class="twister-sentence">
-                  <p>Meet with Janet</p>
+                  <p>{{stat.twisterText}}</p>
                   <div class="info">
                     <div class="accuracy-info">
                       <ion-icon name="ios-speedometer-outline"></ion-icon>
-                      <label>70%</label>
+                      <label>{{stat.correctPercentage}}%</label>
                     </div>
                     <div class="attemps-info">
                       <ion-icon name="ios-clock-outline"></ion-icon>
-                      <label>10 times</label>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-          <div>
-            <ion-grid>
-              <ion-row>
-                <ion-col col-1 class="col-square">
-                  <div class="square"></div>
-                </ion-col>
-                <ion-col col-11 class="twister-sentence">
-                  <p>Go to Tokyo</p>
-                  <div class="info">
-                    <div class="accuracy-info">
-                      <ion-icon name="ios-speedometer-outline"></ion-icon>
-                      <label>89%</label>
-                    </div>
-                    <div class="attemps-info">
-                      <ion-icon name="ios-clock-outline"></ion-icon>
-                      <label>5 times</label>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-          <div>
-            <ion-grid>
-              <ion-row>
-                <ion-col col-1 class="col-square">
-                  <div class="square"></div>
-                </ion-col>
-                <ion-col col-11 class="twister-sentence">
-                  <p>Kill Romeo</p>
-                  <div class="info">
-                    <div class="accuracy-info">
-                      <ion-icon name="ios-speedometer-outline"></ion-icon>
-                      <label>90%</label>
-                    </div>
-                    <div class="attemps-info">
-                      <ion-icon name="ios-clock-outline"></ion-icon>
-                      <label>3 times</label>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-          <div>
-            <ion-grid>
-              <ion-row>
-                <ion-col col-1 class="col-square">
-                  <div class="square"></div>
-                </ion-col>
-                <ion-col col-11 class="twister-sentence">
-                  <p>Meet with Janet</p>
-                  <div class="info">
-                    <div class="accuracy-info">
-                      <ion-icon name="ios-speedometer-outline"></ion-icon>
-                      <label>70%</label>
-                    </div>
-                    <div class="attemps-info">
-                      <ion-icon name="ios-clock-outline"></ion-icon>
-                      <label>10 times</label>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-          <div>
-            <ion-grid>
-              <ion-row>
-                <ion-col col-1 class="col-square">
-                  <div class="square"></div>
-                </ion-col>
-                <ion-col col-11 class="twister-sentence">
-                  <p>Go to Tokyo</p>
-                  <div class="info">
-                    <div class="accuracy-info">
-                      <ion-icon name="ios-speedometer-outline"></ion-icon>
-                      <label>89%</label>
-                    </div>
-                    <div class="attemps-info">
-                      <ion-icon name="ios-clock-outline"></ion-icon>
-                      <label>5 times</label>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-          <div>
-            <ion-grid>
-              <ion-row>
-                <ion-col col-1 class="col-square">
-                  <div class="square"></div>
-                </ion-col>
-                <ion-col col-11 class="twister-sentence">
-                  <p>Kill Romeo</p>
-                  <div class="info">
-                    <div class="accuracy-info">
-                      <ion-icon name="ios-speedometer-outline"></ion-icon>
-                      <label>90%</label>
-                    </div>
-                    <div class="attemps-info">
-                      <ion-icon name="ios-clock-outline"></ion-icon>
-                      <label>3 times</label>
+                      <label>{{stat.attempts_taken}} times</label>
                     </div>
                   </div>
                 </ion-col>
@@ -172,8 +62,8 @@
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <button ion-button full color="primary" class="btn-playagain">
-          Play again
+        <button ion-button full color="primary" class="btn-playagain" (click)="next()" >
+          Next
         </button>
       </ion-col>
     </ion-row>

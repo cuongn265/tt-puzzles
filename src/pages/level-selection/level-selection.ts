@@ -5,7 +5,6 @@ import { StagePage } from "../stage/stage";
 
 
 
-
 /**
  * Generated class for the LevelSelection page.
  *
@@ -27,13 +26,4 @@ export class LevelSelectionPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad LevelSelection');
   }
-
-  goHome() {
-    this.navCtrl.push(HomePage);
-  }
-
-  playMode(selectedMode: any) {
-    console.log('Play ' + selectedMode);
-  }
-
 }

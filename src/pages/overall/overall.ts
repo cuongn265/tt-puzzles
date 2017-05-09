@@ -17,6 +17,7 @@ export class OverallPage {
 
   private averageUserCorrectionPercentage: number = 0;
   private conqueredTwisters: number = 0;
+  private failedTwisters: number = 0;
 
   private userRate: {
     text: string,
@@ -39,6 +40,7 @@ export class OverallPage {
     /* Update stats and score stuffs*/
     this.averageUserCorrectionPercentage = this.calculateOverallScoreBand(this.userStatistics);
     this.conqueredTwisters = this.returnConqueredTwisters(this.userStatistics);
+    this.failedTwisters = configuration.number_of_twisters_per_round - this.conqueredTwisters;
     this.userRate = this.getRateOnOverallScoreBand(this.averageUserCorrectionPercentage);
   }
 
@@ -78,9 +80,9 @@ export class OverallPage {
       text: string,
       color: string
     } = {
-      text: "",
-      color: ""
-    }
+        text: "",
+        color: ""
+      }
     let adjustedScore = Math.round(averageScore / 10) * 10;
     console.log('Adjusted Score: ' + adjustedScore);
     for (let scoreBand of configuration.pronunciation_skill_bands) {
@@ -97,15 +99,16 @@ export class OverallPage {
     return mode.charAt(0).toUpperCase() + mode.slice(1);
   }
 
-  private replayLevel() {
-    this.navCtrl.pop();
+  private next() {
+    // this.navCtrl.pop().then(()=> {
+    //   this.navCtrl.pop();
+    // });
+    this.navCtrl.setRoot(LevelSelectionPage);
   }
 
-  private goToLevelSelection() {
-    this.navCtrl.push(LevelSelectionPage);
-  }
-
-  private goToResultInDetail() {
-
+  private resolveColor(correctPercentage: number): string {
+    if (correctPercentage == 100)
+      return "#50D2C2";
+    return "#f53d3d";
   }
 }
