@@ -1,67 +1,100 @@
-page-stage {
-  scroll-content {
-    display: flex;
-    flex-direction: column;
-  }
-  ion-grid {
-    padding: 0;
-    height: 100%;
-    .content {
-      flex: 5;
-      ion-card {
-        background: transparent;
-        border: 1px solid white;
-        ion-card-content {
-          height: 100%;
-          .header {
-            flex: 1;
-            color: color($colors, light);
+  page-stage {
+    scroll-content {
+      display: flex;
+      flex-direction: column;
+    }
+    ion-grid {
+      padding: 0;
+      height: 100%;
+      .content {
+        flex: 4;
+        color: color($colors, dark);
+        .header {
+          flex: 1;
+          color: color($colors, dark);
+          ion-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
-          .body {
-            flex: 5;
-            color: color($colors, light);
-            // button {
-            //   width: 50px;
-            //   height: 50px;
-            //   border-radius: 50%;
-            //   border: 1px solid;
-            // }
-            ion-grid {
-              ion-row {
-                flex: 1;
-              }
-              .challenge {
-                p {
-                  font-size: 1.8rem;
-                }
-              }
-              .result {
-              }
-            }
+          p {
+            opacity: 0.5;
+            font-size: 15px;
+            font-weight: normal;
+            font-style: oblique;
+            font-stretch: normal;
+            letter-spacing: 1.2px;
+            text-align: center;
+            color: #1d1d26;
           }
-          .attempt {
-            flex: 1;
-            color: color($colors, light);
+        }
+        .body {
+          flex: 5;
+          color: color($colors, dark); // button {
+          //   width: 50px;
+          //   height: 50px;
+          //   border-radius: 50%;
+          //   border: 1px solid;
+          // }
+          ion-grid {
             ion-row {
+              flex: 1;
               ion-col {
                 display: flex;
-                text-align: center;
                 justify-content: center;
-                align-items: flex-end;
+                align-items: center;
               }
+            }
+            .challenge,
+            .result {
+              padding: 0 30px;
+              font-size: 15px;
+              line-height: 1.67;
+              letter-spacing: 0.5px;
+              text-align: center;
+              color: #1d1d26;
+            }
+            .btn-listen {
+              width: 75px;
+              height: 75px;
+              font-size: 20px;
+            }
+            .result {}
+          }
+        }
+        .attempt {
+          flex: 1;
+          color: color($colors, dark);
+          ion-row {
+            ion-col {
+              display: flex;
+              text-align: center;
+              justify-content: center;
+              align-items: flex-end;
             }
           }
         }
       }
-    }
-    .actions {
-      flex: 1;
-      // button {
-      //   width: 50px;
-      //   height: 50px;
-      //   border-radius: 50%;
-      //   border: 1px solid;
-      // }
+      .actions {
+        flex: 1;
+        ion-grid {
+          display: flex;
+          flex-direction: column;
+          ion-row {
+            flex: 1;
+            button {
+              margin: 0;
+              height: 100%;
+              font-size: 15px;
+              text-transform: capitalize;
+            }
+          }
+        } // button {
+        //   width: 50px;
+        //   height: 50px;
+        //   border-radius: 50%;
+        //   border: 1px solid;
+        // }
+      }
     }
   }
-}

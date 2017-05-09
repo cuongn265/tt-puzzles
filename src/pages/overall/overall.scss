@@ -7,10 +7,9 @@ page-overall {
     padding: 0;
     height: 100%;
     .content {
-      padding: 20px;
-      flex: 3;
+      flex: 1;
+      color: color($colors, dark);
       ion-grid {
-        border: 1px solid;
         ion-row {
           ion-col {
             height: 100%;
@@ -22,58 +21,115 @@ page-overall {
               flex: 1;
             }
           }
-          .header {
-            p:first-child {
-              font-size: 2rem;
-              margin: 0px;
-            }
-
-            p:last-child {
-              font-size: 1.4rem;
-            }
-          }
-          .body {
-            p {
-              font-size: 1.6rem;
-            }
-          }
-
-          .footer {
-            p {
-              font-size: 2rem;
-            }
-          }
         }
-        ion-row:nth-child(odd) {
-          flex: 3;
-        }
-        ion-row:nth-child(even) {
+        .header {
           flex: 4;
+          img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+          }
+        }
+        .body {
+          flex: 2;
+          p {
+            font-size: 30px;
+            font-weight: 300;
+            line-height: 1.0;
+            letter-spacing: 1px;
+            text-align: center;
+            color: #1d1d26;
+          }
+        }
+        .footer {
+          flex: 3;
+          background-color: #f8f8f8;
+          .pass {
+            color: white;
+            background-color: rgba(80, 210, 194, 0.8);
+          }
+          .fail {
+            color: white;
+            background-color: rgba(255, 51, 102, 0.8);
+          }
+          .accuracy {
+            color: white;
+            background-color: rgba(119, 136, 153, 0.8);
+          }
+          ion-col {
+            font-size: 25px;
+            font-weight: 300;
+            line-height: 1.0;
+            letter-spacing: 1px;
+            text-align: center;
+            color: color($colors, dark);
+            ion-icon {
+              opacity: 1;
+            }
+            p {
+              margin-top: 10px;
+              margin-bottom: 0;
+            }
+          }
         }
       }
     }
     .actions {
       flex: 1;
-      .left-options,
-      .right-options {
-        height: 100%;
-        justify-content: center;
-        display: flex;
-        align-items: flex-end;
-        button {
-          width: 70px;
-          height: 70px;
-          font-size: 2rem;
+      .scroll-content {
+        color: color($colors, dark);
+        .col-square {
+          padding-left: 0;
+          .square {
+            width: 10px;
+            height: 10px;
+            background-color: color($colors, primary);
+            margin-top: 3px;
+          }
+        }
+        .twister-sentence {
+          font-size: 15px;
+          line-height: 1.0;
+          color: #1d1d26;
+          p {
+            margin: 0;
+          }
+          .info {
+            margin-top: 10px;
+            display: flex;
+            opacity: 0.5;
+            font-size: 12px;
+            line-height: 1.0;
+            color: #1d1d26;
+            .accuracy-info {
+              flex: 1;
+              ion-icon {
+                padding-right: 5px;
+              }
+            }
+            .attemps-info {
+              flex: 2;
+              ion-icon {
+                padding-right: 5px;
+              }
+            }
+          }
+        }
+        ion-grid {
+          ion-row {
+            margin: 20px;
+            margin-bottom: 0;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+          }
         }
       }
-      .center-options {
-        height: 100%;
-        button {
-          width: 90px;
-          height: 90px !important;
-          font-size: 2.8rem;
-        }
-      }
+    }
+    .btn-playagain {
+      height: 64px;
+      margin: 0;
+      text-transform: capitalize;
+      font-weight: 300px;
     }
   }
 }
