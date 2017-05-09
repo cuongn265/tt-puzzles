@@ -246,8 +246,7 @@ export class StagePage {
 
         let twisterSkippingAlert = this.alertCtrl.create({
           title: "Skipping Twister",
-          subTitle: 'No attempts have been made on this one so far',
-          message: "You will have no score for this twister, continue ?"
+          message: "No attempts have been made on this one so far. You will have no score for this twister, continue ?"
         });
 
         twisterSkippingAlert.addInput({
