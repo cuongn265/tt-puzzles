@@ -31,6 +31,8 @@ export class StringComparisonService {
     console.log(this.targetString);
     console.log('Input');
     console.log(input);
+    console.log('User answer');
+    console.log(input);
     this.splitTargetString =  this.targetString.split(" ");
     this.topCandidate = [];
     this.inputStat = [];
