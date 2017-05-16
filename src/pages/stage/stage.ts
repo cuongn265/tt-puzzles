@@ -85,7 +85,7 @@ export class StagePage {
    */
   private showResult: boolean = false;
   private totalTwisters: number = configuration.number_of_twisters_per_round;
-
+  
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public navParams: NavParams, private angularFire: AngularFire,
     private textToSpeech: TextToSpeech, private speechRecognition: SpeechRecognition, private smartAudio: SmartAudio, private stringComparisonService: StringComparisonService,
@@ -200,11 +200,14 @@ export class StagePage {
 
     this.startListening = true;
     //Start the recognition process
-    this.speechRecognition.startListening()
+    let options = {
+      language: "en-US"
+    };
+    this.speechRecognition.startListening(options)
       .subscribe(
       (matches: Array<string>) => {
         this.speechList = matches;
-        
+        this.twisterTouched = true;
         loadingSpinner.present().then(() => {
           this.stringComparisonService.returnClosestStringMatch(this.currentTwister.text, this.speechList).then((closestString: string) => {
             this.twisterTouched = true;
