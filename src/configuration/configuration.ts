@@ -5,8 +5,8 @@ export const configuration = {
     "requestURL": "https://od-api.oxforddictionaries.com/api/v1/entries/en/"
   },
   "bluemixAPI": {
-    "username": "2fb02bf0-8c20-4cc4-b842-8701132bd86f",
-    "password": "bpZoBB1GgrrD",
+    "username": "e4ffd813-060f-4cf2-871a-9315f0da0b73",
+    "password": "jwwJA33QtCKL",
     "requestURLPartial_prefix": "pronunciation?text=",
     "requestURL_prefix": "https://stream.watsonplatform.net/text-to-speech/api/v1/pronunciation?text=",
     "requestURL_suffix": "&format=ipa",
